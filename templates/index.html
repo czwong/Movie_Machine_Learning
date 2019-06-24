@@ -21,13 +21,13 @@
         <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarMenu">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <!-- <div class="collapse navbar-collapse" id="navbarMenu">
+        <div class="collapse navbar-collapse" id="navbarMenu">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a href="#" class="nav-link">Statistic Charts</a>
+                    <a href="#" class="nav-link">Theaters</a>
                 </li>
             </ul>
-        </div> -->
+        </div>
     </nav>
 
     <div class="container-fluid">
@@ -39,10 +39,15 @@
                             <div class="form-group">
                                 <ul class="list-group" id="filters">
                                     <li class="filter list-group-item">
-                                        <label for="column">Choose Team</label>
-                                        <select id="dataSet" onchange="optionChanged(this.value)"></select><hr>
+                                        <label for="input">Search Movie Title</label>
+                                        <input class="form-control" id="input" type="text" placeholder="Search...">
+                                        <br>
+                                        <button id="submit-btn" type="submit" class="btn btn-default">Submit</button>
+                                        <button id="clear-btn" type="reset" class="btn btn-default">Clear</button>
+                                        <hr>
+                                        <label for="dataSet">Choose Movie</label>
+                                        <select id="dataSet" onchange="optionChanged(this.value)"></select>  
                                         <p id="moviedata"></p>
-                                        <button id="refresh-btn" type="submit" class="btn btn-default">Restart Filter</button>
                                     </li>
                                 </ul>
                             </div>
