@@ -1,9 +1,13 @@
 import json
 import mysql.connector
-from config import sqlinfo
 from config import info
 
-mydb = sqlinfo
+mydb = mysql.connector.connect(
+    host=info["database"],
+    user=info["username"],
+    passwd=info["password"],
+    database=info["database"]
+)
 
 drop_cursor = mydb.cursor()
 

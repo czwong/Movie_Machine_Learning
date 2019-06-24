@@ -63,7 +63,8 @@ def scrape_movies():
         except(TypeError):
             pass
 
-        movies_json = json.dumps(info_list)
+    print("Finished scraping all data.")
+    movies_json = json.dumps(info_list)
 
     return movies_json
 
