@@ -1,6 +1,5 @@
 from bs4 import BeautifulSoup
 import requests
-import os
 import json
 
 def scrape_movies():
@@ -23,11 +22,9 @@ def scrape_movies():
 
     # Loop through each movie item
     for movie in movie_info:
-        
         dict1 = {}
         
         try:
-            
             # Find elements that contain info for votes and gross revenue
             items = movie.find_all("p", class_="text-muted text-small")
             # Loop through each of these items
@@ -46,14 +43,10 @@ def scrape_movies():
                         dict1["votes"] = value_text
             
             # Find the rest of the movie information and store it in the dictionary
-            rating = movie.find("span", class_="ipl-rating-star__rating").text
-            dict1["rating"] = rating
-            duration = (movie.find("span", class_="runtime").text).split(" ")[0]
-            dict1["duration"] = duration 
-            name = movie.find("h3", class_="lister-item-header").find("a").text
-            dict1["name"] = name
-            image = movie.find("img")["loadlate"]
-            dict1["image"] = image
+            dict1["rating"] = movie.find("span", class_="ipl-rating-star__rating").text
+            dict1["duration"] = (movie.find("span", class_="runtime").text).split(" ")[0]
+            dict1["name"] = movie.find("h3", class_="lister-item-header").find("a").text
+            dict1["image"] = movie.find("img")["loadlate"]
             
             # Append the dictionary to the list
             info_list.append(dict1)
