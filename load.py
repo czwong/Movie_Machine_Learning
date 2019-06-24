@@ -1,9 +1,34 @@
 import json
 import mysql.connector
+from config import sqlinfo
+from config import info
+
+mydb = sqlinfo
+
+drop_cursor = mydb.cursor()
+
+drop_cursor.execute(f"drop table if exists {info['database']}.movies")
+
+mycursor = mydb.cursor()
+
+mycursor.execute \
+(f"create table {info['database']}.movies \
+  (name varchar(60) not null\
+  ,total_votes bigint \
+  ,rating float \
+  ,duration integer \
+  ,gross_earnings bigint \
+  ,image varchar(200) \
+  ,primary key (name))")
+
 
 def load(record):
-    db_conn.session.add(db_conn.Violation(**record))
-    db_conn.session.commit()
 
-    return "hey"
+    movieInsert = "INSERT INTO movies (name, total_votes, rating, duration, gross_earnings, image) VALUES ( %s, %s, %s, %s, %s, %s)"
+
+    mycursor.execute(movieInsert, record)
+
+    mydb.commit()
+
+    print(f"Imported movie {record['name']}")
 
