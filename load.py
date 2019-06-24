@@ -3,7 +3,7 @@ import mysql.connector
 from config import info
 
 mydb = mysql.connector.connect(
-    host=info["database"],
+    host=info["host"],
     user=info["username"],
     passwd=info["password"],
     database=info["database"]
