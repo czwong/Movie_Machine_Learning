@@ -1,14 +1,25 @@
 function moviedata(movie) {
     var url = "/movies/" + `${movie}`;
 
-    // Use d3 to select the panel with id of `#gamedata`
-    var football_data = d3.select("#gamedata");
+    // Use d3 to select the div panel with class of `#jumbotron`
+    var movie_data = d3.select("div.jumbotron");
 
     d3.json(url).then(function (response) {
         // Use `.html("") to clear any existing data
-        football_data.html("");
+        movie_data.html("");
 
-        football_data.html('<b>Number of Games: </b>' + response.length);
+        movie_data.select('h1')
+            .data(response)
+            .enter()
+            .append('h1')
+            .attr('class', 'title_heading')
+            .text(response.movie_title);
+
+        movie_data.select('img')
+            .data(response)
+            .enter()
+            .append('img')
+            .attr('src', response.img);
     });
 }
 
@@ -17,7 +28,7 @@ function init() {
   var selector = d3.select("#dataSet");
 
   // Use the list of movies to populate the select options
-  d3.json("/movies").then((movie_list) => {
+  d3.json("/movie_title").then((movie_list) => {
     movie_list.forEach((movie) => {
       selector
         .append("option")
@@ -25,17 +36,18 @@ function init() {
         .property("value", movie);
     });
 
-      //// Use the first team from the list to build the initial plots
-      //const firstteam = team_list[0][0];
-      //footballdata(firstteam);
+    // Use the first movie to initialize
+    const firstmovie = movie_list[0][0];
+    moviedata(firstmovie);
   });
 }
 
 // Initialize the dashboard
 init();
 
-function optionChanged(newTeam) {
-    // Fetch new data each time a new team is selected
+function optionChanged(newMovie) {
+    // Fetch new data each time a new movie is selected
+    moviedata(newMovie)
 }   
 
 //$('select').on('change', function () {

@@ -9,7 +9,7 @@ body {
 }
 
 select {
-  display: block;
+display: block;
   width: 100%;
   padding: 6px;
   color: black;
@@ -23,12 +23,44 @@ select {
   background-image: url('../static/index_images/nfl_background.jpg');
 }
 
-.btn-default:hover{
+.btn-default:hover {
   border-color:black;
 }
 
 #moviedata {
   font-family: "Trebuchet MS", sans-serif;
+}
+
+.jumbotron {
+  margin: 10px;
+}
+
+#demo {
+  width: 100%;
+}
+
+.col-md-3{
+  display: inline-block;
+  margin-left:-4px;
+}
+.col-md-3 img{
+  width:100%;
+  height:auto;
+}
+body .carousel-indicators li{
+  background-color:black;
+}
+body .carousel-indicators{
+  bottom: 0;
+}
+body .carousel-control-prev-icon,
+body .carousel-control-next-icon{
+  margin: 0px;
+  background-color:black;
+}
+body .no-padding{
+  padding-left: 0;
+  padding-right: 0;
 }
 
 /* .group {
