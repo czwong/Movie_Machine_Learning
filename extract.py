@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
-import json
+
 
 def scrape_movies():
 
@@ -57,9 +57,9 @@ def scrape_movies():
             pass
 
     print("Finished scraping all data.")
-    movies_json = json.dumps(info_list)
 
-    return movies_json
+    return info_list
+    
 
 if __name__ == "__main__":
     scrape_movies()

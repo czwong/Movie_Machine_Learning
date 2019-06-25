@@ -1,4 +1,3 @@
-import json
 import mysql.connector
 from config import info
 
@@ -30,7 +29,9 @@ def load(record):
 
     movieInsert = "INSERT INTO movies (name, total_votes, rating, duration, gross_earnings, image) VALUES ( %s, %s, %s, %s, %s, %s)"
 
-    mycursor.execute(movieInsert, record)
+    # Convert the values to a list
+    values = [record['name'], record['total_votes'], record['rating'], record['duration'], record['gross_earnings'], record['image']]
+    mycursor.execute(movieInsert, values)
 
     mydb.commit()
 

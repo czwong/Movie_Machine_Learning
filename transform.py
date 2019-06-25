@@ -1,11 +1,9 @@
-import json
-import os
 import load
 from extract import scrape_movies
 
 
 def delete_empty_rows(record): 
-    if record['gross'] == None: 
+    if 'gross' not in record.keys() or record['gross'] == None:
         del record
     else:
         return record
@@ -13,10 +11,10 @@ def delete_empty_rows(record):
 def transformed_record(record):
     return {
         "name": record["name"],
-        "total_votes": record["votes"],
-        "rating": record["rating"],
-        "duration": record["duration"],
-        "gross_earnings": record["gross"],
+        "total_votes": int(record["votes"]),
+        "rating": float(record["rating"]),
+        "duration": int(record["duration"]),
+        "gross_earnings": int(record["gross"].replace(',', '')),
         "image": record["image"]
     }
 
