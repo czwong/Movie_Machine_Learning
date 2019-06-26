@@ -27,8 +27,7 @@ def read_movie():
 
             #Append the dictionary to the list
             moviedata.append(data)
-            
-            print(moviedata)
+        return moviedata
 
 if __name__ == "__main__":
     read_movie()

@@ -16,13 +16,14 @@ mycursor = mydb.cursor()
 
 mycursor.execute \
 (f"create table {info['database']}.movies \
-  (name varchar(60) not null\
+  (movieID int NOT NULL AUTO_INCREMENT \
+  ,name varchar(80) not null\
   ,total_votes bigint \
   ,rating float \
   ,duration integer \
   ,gross_earnings bigint \
-  ,image varchar(200) \
-  ,primary key (name))")
+  ,genre varchar(200) \
+  ,primary key (movieID))")
 
 def load(record):
 
@@ -34,4 +35,4 @@ def load(record):
 
     mydb.commit()
 
-    print(f"Imported movie {record['name']}")
+    # print(f"Imported movie {record['name']}")
