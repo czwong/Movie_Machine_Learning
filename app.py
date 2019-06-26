@@ -19,7 +19,7 @@ app = Flask(__name__)
 # Database Setup
 #################################################
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db/data.sqlite"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db/movies_2019.sqlite"
 db = SQLAlchemy(app)
 
 # Reflect an existing database into a new model
@@ -29,9 +29,7 @@ Base = automap_base()
 Base.prepare(db.engine, reflect=True)
 
 # Save references to each table
-Games = Base.classes.games
-Pricing = Base.classes.pricing
-Venues = Base.classes.venues
+Movies = Base.classes.movies
 
 @app.route("/")
 def index():
@@ -40,7 +38,7 @@ def index():
 
 @app.route("/movie_title")
 def movies():
-    movies = db.session.query(Games.team1).distinct()
+    movies = db.session.query(Movies.name).distinct()
 
     # Return a list of the column names (team names)
     return jsonify(list(movies))
@@ -48,28 +46,24 @@ def movies():
 @app.route("/movies/<movie>")
 def find(movie):
     sel = [
-        Games.title,
-        Venues.lat,
-        Venues.lon,
-        Pricing.low_price,
-        Pricing.high_price
+        Movies.name,
+        Movies.rating,
+        Movies.duration,
+        Movies.gross_earnings,
+        Movies.image
     ]
 
-    table = db.session.query(*sel).\
-        join(Venues, Games.venue_id == Venues.venue_id).\
-        join(Pricing, Games.game_id == Pricing.game_id).\
-        filter(or_(Games.team1 == team, Games.team2 == team)).\
-        order_by(Games.utcdate).all()
+    table = db.session.query(*sel).all()
 
     movie_list = []
     for results in table:
-        events = {}
-        events["Event"] = results[0]
-        events["Latitude"] = results[1]
-        events["Longitude"] = results[2]
-        events["Low_price"] = results[3]
-        events["High_price"] = results[4]
-        movie_list.append(events)
+        movie = {}
+        movie["Title"] = results[0]
+        movie["Rating"] = results[1]
+        movie["Duration"] = results[2]
+        movie["Gross_Earning"] = results[3]
+        movie["Poster_Image"] = results[4]
+        movie_list.append(movie)
 
     return jsonify(movie_list)
 
