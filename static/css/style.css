@@ -27,12 +27,18 @@ select {
   border-color:black;
 }
 
-#moviedata {
-  font-family: "Trebuchet MS", sans-serif;
+.jumbotron {
+  margin: 5px;
+  padding: 5px;
 }
 
-.jumbotron {
-  margin: 10px;
+.title_heading { 
+  font-family: 'Helvetica Neue', sans-serif; 
+  font-size: 40px;
+  font-weight: bold; 
+  letter-spacing: -1px; 
+  line-height: 1; 
+  text-align: center;
 }
 
 #demo {
@@ -43,33 +49,32 @@ select {
   display: inline-block;
   margin-left:-4px;
 }
+
 .col-md-3 img{
   width:100%;
   height:auto;
 }
+
 body .carousel-indicators li{
   background-color:black;
 }
+
 body .carousel-indicators{
   bottom: 0;
 }
+
 body .carousel-control-prev-icon,
 body .carousel-control-next-icon{
   margin: 0px;
   background-color:black;
 }
+
 body .no-padding{
   padding-left: 0;
   padding-right: 0;
 }
 
-/* .group {
-  margin-top: 10px;
-  margin-bottom: 10px;
-  margin-right: 10px;
-}
-
-.nfl-logo {
+/* .nfl-logo {
   position: absolute;
   height: auto;
   width: 4%;

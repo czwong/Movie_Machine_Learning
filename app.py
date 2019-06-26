@@ -53,7 +53,7 @@ def find(movie):
         Movies.image
     ]
 
-    table = db.session.query(*sel).all()
+    table = db.session.query(*sel).filter(Movies.name == movie).all()
 
     movie_list = []
     for results in table:

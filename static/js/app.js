@@ -1,25 +1,30 @@
 function moviedata(movie) {
-    var url = "/movies/" + `${movie}`;
+    
+    var url = "/movies/" + `${movie}`
 
     // Use d3 to select the div panel with class of `#jumbotron`
-    var movie_data = d3.select("div.jumbotron");
+    var movie_data_title = d3.select("body > div > div:nth-child(1) > div.col-lg-8 > div > div:nth-child(1)");
+    var movie_data_img = d3.select("body > div > div:nth-child(1) > div.col-lg-8 > div > div:nth-child(2) > div:nth-child(1)");
+    var movie_data = d3.select("body > div > div:nth-child(1) > div.col-lg-8 > div > div:nth-child(2) > div:nth-child(2)");
 
     d3.json(url).then(function (response) {
         // Use `.html("") to clear any existing data
         movie_data.html("");
 
-        movie_data.select('h1')
+        movie_data_title.selectAll('h1')
             .data(response)
             .enter()
             .append('h1')
             .attr('class', 'title_heading')
-            .text(response.movie_title);
+            .text(response[0].Title);
 
-        movie_data.select('img')
+        movie_data_img.selectAll('img')
             .data(response)
             .enter()
             .append('img')
-            .attr('src', response.img);
+            .attr('src', response[0].Poster_Image)
+            .attr('height', '25%')
+            .attr('width', '25%');
     });
 }
 
