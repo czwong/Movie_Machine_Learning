@@ -1,5 +1,5 @@
-import load
-from extract import scrape_movies
+import loadUpcoming
+from extractUpcoming import scrape_movies
 
 
 def delete_empty_rows(record): 
@@ -23,7 +23,7 @@ def transform_data(data):
         cleaned_record = delete_empty_rows(d)
         if cleaned_record:
             transformed = transformed_record(cleaned_record)
-            load.load(transformed)
+            loadUpcoming.load(transformed)
 
 
 if __name__ == "__main__":
