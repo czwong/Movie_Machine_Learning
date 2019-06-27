@@ -1,5 +1,4 @@
 function moviedata(movie) {
-    
     var url = "/movies/" + `${movie}`
 
     // Use d3 to select the div panel with class of `#jumbotron`
@@ -33,6 +32,37 @@ function moviedata(movie) {
             .text(response[0].)
     });
 }
+
+function movieRecommender(movie) {
+    var movieList_url = "/movie_recommendation/" + `${movie}`
+
+    var carousel_1 = d3.select("#demo > div > div:nth-child(1)");
+    var carousel_2 = d3.select("#demo > div > div:nth-child(2)");
+    var carousel_3 = d3.select("#demo > div > div:nth-child(3)");
+
+    var carousel_group = [carousel_1, carousel_2, carousel_3];
+
+    d3.json(movieList_url).then(function (movieList) {
+        movieList.forEach(searchMovie);
+
+        function searchMovie(movie) {
+            var url = "/movies/" + `${movie}`
+
+            d3.json(url).then(function (response) {
+                carousel_1._groups[0][0].childElementCount <
+
+                    carousel_1.selectAll('div')
+                        .data(response)
+                        .enter()
+                        .append('div')
+                        .attr('class', 'col-xs-3 col-sm-3 col-md-3')
+                        .append('img')
+                        .attr('src', response[0].Poster_Image)
+            });
+        }
+    });
+}
+
 
 function init() {
   // Grab a reference to the dropdown select element

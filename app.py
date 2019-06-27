@@ -31,10 +31,12 @@ Base.prepare(db.engine, reflect=True)
 # Save references to each table
 Movies = Base.classes.movies
 
+
 @app.route("/")
 def index():
     """Return the homepage."""
     return render_template("index.html")
+
 
 @app.route("/movie_title")
 def movies():
@@ -43,8 +45,10 @@ def movies():
     # Return a list of the column names (team names)
     return jsonify(list(movies))
 
+
 @app.route("/movies/<movie>")
 def find(movie):
+    
     sel = [
         Movies.name,
         Movies.rating,
@@ -66,6 +70,48 @@ def find(movie):
         movie_list.append(movie)
 
     return jsonify(movie_list)
+
+
+import sqlite3
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import linear_kernel
+
+cnx = sqlite3.connect('db/movie_data.sqlite')
+df = pd.read_sql_query("SELECT * FROM movies", cnx)
+# Break up the big genre string into a string array
+df['genre'] = df['genre'].str.split('|')
+# Convert genres to string value
+df['genre'] = df['genre'].fillna("").astype('str')
+
+tf = TfidfVectorizer(analyzer='word',ngram_range=(1, 2),min_df=0, stop_words='english')
+tfidf_matrix = tf.fit_transform(df['genre'])
+cosine_sim = linear_kernel(tfidf_matrix, tfidf_matrix)
+
+# Build a 1-dimensional array with movie titles
+titles = df['name']
+indices = pd.Series(df.index, index=df['name'])
+
+# Function that get movie recommendations based on the cosine similarity score of movie genres
+def genre_recommendations(title):
+    newtitle = title + '\xa0'
+    idx = indices[newtitle]
+    print(idx)
+    sim_scores = list(enumerate(cosine_sim[idx]))
+    sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
+    sim_scores = sim_scores[1:21]
+    movie_indices = [i[0] for i in sim_scores]
+    return titles.iloc[movie_indices]
+ 
+
+@app.route("/movie_recommendation/<movie>")
+def movie_recommender(movie):
+    movie_recommendation = genre_recommendations('Spectre').head(20).tolist()
+
+    movie_recommendation_list = []
+    for recommendation in movie_recommendation:
+        movie_recommendation_list.append(recommendation.replace('\xa0', ''))
+
+    return jsonify(movie_recommendation_list)
 
 
 
