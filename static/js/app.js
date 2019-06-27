@@ -1,5 +1,5 @@
 function moviedata(movie) {
-    var url = "/movies/" + `${movie}`
+    var url = "/movies/" + `${movie}`;
 
     // Use d3 to select the div panel with class of `#jumbotron`
     var movie_data_title = d3.select("body > div > div:nth-child(1) > div.col-lg-8 > div > div:nth-child(1) > div");
@@ -25,11 +25,11 @@ function moviedata(movie) {
             .attr('height', 'auto')
             .attr('width', 'auto');
 
-        movie_data.selectAll('p')
-            .data(response)
-            .enter()
-            .append('p')
-            .text(response[0].)
+        //movie_data.selectAll('p')
+        //    .data(response)
+        //    .enter()
+        //    .append('p')
+        //    .text(response[0].)
     });
 }
 
@@ -43,21 +43,31 @@ function movieRecommender(movie) {
     var carousel_group = [carousel_1, carousel_2, carousel_3];
 
     d3.json(movieList_url).then(function (movieList) {
+        carousel_1.html("");
+        carousel_2.html("");
+        carousel_3.html("");
+
         movieList.forEach(searchMovie);
+        let carousel_count = 0;
 
         function searchMovie(movie) {
-            var url = "/movies/" + `${movie}`
+            var movie_url = "/movies/" + `${movie}`;
 
-            d3.json(url).then(function (response) {
-                carousel_1._groups[0][0].childElementCount <
-
-                    carousel_1.selectAll('div')
+            d3.json(movie_url).then(function (response) {
+                if (carousel_group[carousel_count]._groups[0][0].childElementCount < 7) {
+                    console.log(carousel_group[carousel_count]);
+                    carousel_group[carousel_count].selectAll('div')
                         .data(response)
                         .enter()
                         .append('div')
-                        .attr('class', 'col-xs-3 col-sm-3 col-md-3')
-                        .append('img')
-                        .attr('src', response[0].Poster_Image)
+                        .attr('class', 'col-xs-2 col-sm-2 col-md-2')
+                        .append('p')
+                        .text(response[0].Title);
+                }
+
+                else {
+                    carousel_count++;
+                }
             });
         }
     });
@@ -80,6 +90,7 @@ function init() {
     // Use the first movie to initialize
     const firstmovie = movie_list[0][0];
     moviedata(firstmovie);
+    movieRecommender(firstmovie);
   });
 }
 
@@ -88,7 +99,8 @@ init();
 
 function optionChanged(newMovie) {
     // Fetch new data each time a new movie is selected
-    moviedata(newMovie)
+    //moviedata(newMovie)
+    movieRecommender(newMovie)
 }   
 
 //$('select').on('change', function () {

@@ -50,12 +50,12 @@ select {
   width: 100%;
 }
 
-.col-md-3{
+.col-md-2{
   display: inline-block;
   margin-left:-4px;
 }
 
-.col-md-3 img{
+.col-md-2 img{
   width:100%;
   height:auto;
 }

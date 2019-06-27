@@ -48,28 +48,28 @@ def movies():
 
 @app.route("/movies/<movie>")
 def find(movie):
-    
     sel = [
         Movies.name,
         Movies.rating,
         Movies.duration,
-        Movies.gross_earnings,
-        Movies.image
+        Movies.gross_earnings
+        # Movies.image
     ]
 
-    table = db.session.query(*sel).filter(Movies.name == movie).all()
+    table = db.session.query(*sel).group_by(Movies.name).\
+        filter(Movies.name == movie).all()
 
-    movie_list = []
+    movie_data = []
     for results in table:
         movie = {}
         movie["Title"] = results[0]
         movie["Rating"] = results[1]
         movie["Duration"] = results[2]
         movie["Gross_Earning"] = results[3]
-        movie["Poster_Image"] = results[4]
-        movie_list.append(movie)
+        # movie["Poster_Image"] = results[4]
+        movie_data.append(movie)
 
-    return jsonify(movie_list)
+    return jsonify(movie_data)
 
 
 import sqlite3
@@ -105,13 +105,13 @@ def genre_recommendations(title):
 
 @app.route("/movie_recommendation/<movie>")
 def movie_recommender(movie):
-    movie_recommendation = genre_recommendations('Spectre').head(20).tolist()
+    movie_recommendation = genre_recommendations('Spectre').head(18).tolist()
 
-    movie_recommendation_list = []
-    for recommendation in movie_recommendation:
-        movie_recommendation_list.append(recommendation.replace('\xa0', ''))
+    # movie_recommendation_list = []
+    # for recommendation in movie_recommendation:
+    #     movie_recommendation_list.append(recommendation.replace('\xa0', ''))
 
-    return jsonify(movie_recommendation_list)
+    return jsonify(movie_recommendation)
 
 
 
