@@ -78,8 +78,10 @@ from sklearn.metrics.pairwise import linear_kernel
 
 cnx = sqlite3.connect('db/movie_data.sqlite')
 df = pd.read_sql_query("SELECT * FROM movies", cnx)
+
 # Break up the big genre string into a string array
 df['genre'] = df['genre'].str.split('|')
+
 # Convert genres to string value
 df['genre'] = df['genre'].fillna("").astype('str')
 

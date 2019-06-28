@@ -41,6 +41,8 @@ function movieRecommender(movie) {
     var carousel_3 = d3.select("#demo > div > div:nth-child(3)");
 
     var carousel_group = [carousel_1, carousel_2, carousel_3];
+    let carousel_count = 0;
+
 
     d3.json(movieList_url).then(function (movieList) {
         carousel_1.html("");
@@ -48,15 +50,13 @@ function movieRecommender(movie) {
         carousel_3.html("");
 
         movieList.forEach(searchMovie);
-        let carousel_count = 0;
 
         function searchMovie(movie) {
             var movie_url = "/movies/" + `${movie}`;
 
             d3.json(movie_url).then(function (response) {
-                if (carousel_group[carousel_count]._groups[0][0].childElementCount < 7) {
-                    console.log(carousel_group[carousel_count]);
-                    carousel_group[carousel_count].selectAll('div')
+                if (carousel_group[carousel_count]._groups[0][0].childElementCount < 6) {
+                    carousel_group[carousel_count].selectAll('div.carousel-item')
                         .data(response)
                         .enter()
                         .append('div')
@@ -67,6 +67,13 @@ function movieRecommender(movie) {
 
                 else {
                     carousel_count++;
+                    carousel_group[carousel_count].selectAll('div.carousel-item')
+                        .data(response)
+                        .enter()
+                        .append('div')
+                        .attr('class', 'col-xs-2 col-sm-2 col-md-2')
+                        .append('p')
+                        .text(response[0].Title);
                 }
             });
         }
