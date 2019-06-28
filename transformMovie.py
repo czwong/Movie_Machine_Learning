@@ -53,6 +53,7 @@ def transform_data(data):
             if transformed:
                 loadMovie.load(transformed)
 
+    loadMovie.reload_distinct()
 
 if __name__ == "__main__":
     transform_data(read_movie())

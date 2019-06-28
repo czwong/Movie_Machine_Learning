@@ -11,11 +11,23 @@ mydb = mysql.connector.connect(
 drop_cursor = mydb.cursor()
 
 drop_cursor.execute(f"drop table if exists {info['database']}.movies")
+drop_cursor.execute(f"drop table if exists {info['database']}.new_movies")
 
 mycursor = mydb.cursor()
 
 mycursor.execute \
 (f"create table {info['database']}.movies \
+  (movieID int NOT NULL AUTO_INCREMENT \
+  ,name varchar(80) not null\
+  ,total_votes bigint \
+  ,rating float \
+  ,duration integer \
+  ,gross_earnings bigint \
+  ,genre varchar(200) \
+  ,primary key (movieID))")
+
+mycursor.execute \
+(f"create table {info['database']}.new_movies \
   (movieID int NOT NULL AUTO_INCREMENT \
   ,name varchar(80) not null\
   ,total_votes bigint \
@@ -38,4 +50,10 @@ def load(record):
     mydb.commit()
 
     # print(f"Imported movie {record['name']}")
+
+def reload_distinct():
+
+  movieInsert = "INSERT INTO new_movies (SELECT DISTINCT * FROM movies)"
+  mycursor.execute(movieInsert)
+  mydb.commit()
 
