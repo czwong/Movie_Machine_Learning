@@ -1,6 +1,7 @@
 import mysql.connector
 from config import info
 
+# Connection settings
 mydb = mysql.connector.connect(
     host=info["host"],
     user=info["username"],
@@ -10,11 +11,12 @@ mydb = mysql.connector.connect(
 
 drop_cursor = mydb.cursor()
 
+# Drop table if it exists
 drop_cursor.execute(f"drop table if exists {info['database']}.upcoming")
 
 mycursor = mydb.cursor()
 
-
+# Table schema
 mycursor.execute \
 (f"create table {info['database']}.upcoming \
   (movieID int NOT NULL AUTO_INCREMENT \
@@ -31,10 +33,11 @@ def load(record):
 
     # Convert the values to a list
     values = [record['name'], record['image'], record['release_date'], record['genre']]
+    # Insert values into the upcoming table
     mycursor.execute(movieInsert, values)
 
     print("Loaded " + record['name'])
-
+    # Commit action
     mydb.commit()
 
     # print(f"Imported movie {record['name']}")

@@ -16,12 +16,16 @@ def read_movie():
 
         #Loop through each row
         for row in csvreader:
+            # Initiate dictionary
             data = {}
-
+            # Store movie name
             data["name"] = row['name']
+            # Store image url 
             data["image"] = row['image']
             print(data["image"])
+            # Store release data 
             data["release_date"] = row['release_date']
+            # Store genre
             data["genre"] = row['genre']
 
             #Append the dictionary to the list
