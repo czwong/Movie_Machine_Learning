@@ -19,7 +19,7 @@ titles = set()
 
 
 def transformed_record(record):
-    print('Heres the records name: ' + record['name'])
+    # print('Heres the records name: ' + record['name'])
     if len(record['name']) > 80:
         record['name'] = record['name'][0:80]
     # if record['name'] not in titles:

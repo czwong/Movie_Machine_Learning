@@ -33,6 +33,9 @@ def load(record):
     values = [record['name'], record['total_votes'], record['rating'], record['duration'], record['gross_earnings'], record['genre']]
     mycursor.execute(movieInsert, values)
 
+    print("Loaded " + record['name'])
+
     mydb.commit()
 
     # print(f"Imported movie {record['name']}")
+
