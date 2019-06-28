@@ -17,6 +17,8 @@ def transform_data(data):
         transformed = transformed_record(d)
         loadImages.load(transformed)
 
+    loadImages.reload_distinct()
+
 
 if __name__ == "__main__":
     transform_data(scrape())

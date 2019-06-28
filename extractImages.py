@@ -6,7 +6,7 @@ from time import sleep
 SLEEP_INTERVAL_SECS = 0.05
 
 def scrape():
-    csvpath = ("movie_metadata.csv")
+    csvpath = (r'''movie_metadata.csv''')
 
     #Open the CSV
     with open(csvpath, newline="") as csvfile:
@@ -22,7 +22,7 @@ def scrape():
                 "image": ""
             }
             try: 
-                data["name"] = row['movie_title']
+                data["name"] = (row["movie_title"]).split('\xa0')[0]
                 link = row['movie_imdb_link']
                 response = requests.get(link)
                 soup = BeautifulSoup(response.text, 'html.parser')
