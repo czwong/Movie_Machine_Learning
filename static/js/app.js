@@ -121,15 +121,15 @@ submit.on("click", function () {
 
     for (var i = 0; i < document.getElementById("dataSet").length; i++) {
         console.log(document.getElementById("dataSet").length);
-        if (document.getElementById("dataSet").options[i].value == inputValue) {
+        if (document.getElementById("dataSet").options[i].value === inputValue) {
             console.log("wow");
-            optionChanged(movie);
+            optionChanged(inputValue);
         }
 
         else {
             d3.select("#movie_data_body").append("h1")
                 .attr("class", "nothing_found")
-                .text("No Movie Found");
+                .text("No results found for" + inputValue);
         }
     }
 });
