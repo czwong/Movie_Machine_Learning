@@ -1,11 +1,13 @@
-body {
+/* body {
   margin: 0;
-  padding: 0;
-}
+  padding: 0px;
+  background-color: rgb(4, 48, 90)
+} */
 
 .filters {
   margin: 10px;
   display: block;
+  opacity: 0.90;
 }
 
 select {
@@ -20,7 +22,8 @@ select {
   background-attachment: fixed;
   background-position: bottom center;
   background-size: cover;
-  background-image: url('../static/index_images/nfl_background.jpg');
+  background-image: url('../index_images/background.jpg');
+  padding: 0px;
 }
 
 .btn-default:hover {
@@ -30,6 +33,8 @@ select {
 .jumbotron {
   margin: 5px;
   padding: 5px;
+  background-color:white;
+  opacity: 0.90;
 }
 
 .title_heading { 
@@ -44,13 +49,14 @@ select {
 #movie_data_body {
   margin-top: 20px;
   margin-bottom: 20px;
+  opacity: 1;
 }
 
 #demo {
   width: 100%;
 }
 
-.col-md-2{
+.col-md-2 {
   display: inline-block;
   margin-left:-4px;
 }
@@ -75,8 +81,10 @@ body .carousel-control-next-icon{
 }
 
 body .no-padding{
-  padding-left: 0;
-  padding-right: 0;
+  padding-left: 0px;
+  padding-right: 0px;
+  background-color: black;
+  /* background-image: url('../index_images/background.jpg'); */
 }
 
 /* .nfl-logo {
