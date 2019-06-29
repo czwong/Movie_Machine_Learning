@@ -1,5 +1,5 @@
 info = {
-    'database': 'movie_data',
+    'database': '2019_movies',
     'host': '127.0.0.1',
     'username': 'root',
     'password': 'root',

@@ -10,13 +10,13 @@ mydb = mysql.connector.connect(
 
 drop_cursor = mydb.cursor()
 
-drop_cursor.execute(f"drop table if exists {info['database']}.movies")
-drop_cursor.execute(f"drop table if exists {info['database']}.new_movies")
+drop_cursor.execute(f"drop table if exists {info['database']}.movie_data")
+drop_cursor.execute(f"drop table if exists {info['database']}.new_data")
 
 mycursor = mydb.cursor()
 
 mycursor.execute \
-(f"create table {info['database']}.movies \
+(f"create table {info['database']}.movie_data \
   (movieID int NOT NULL AUTO_INCREMENT \
   ,name varchar(80) not null\
   ,total_votes bigint \
@@ -27,7 +27,7 @@ mycursor.execute \
   ,primary key (movieID))")
 
 mycursor.execute \
-(f"create table {info['database']}.new_movies \
+(f"create table {info['database']}.new_data \
   (movieID int NOT NULL AUTO_INCREMENT \
   ,name varchar(80) not null\
   ,total_votes bigint \
@@ -39,7 +39,7 @@ mycursor.execute \
 
 def load(record):
 
-    movieInsert = "INSERT INTO movies (name, total_votes, rating, duration, gross_earnings, genre) VALUES ( %s, %s, %s, %s, %s, %s)"
+    movieInsert = "INSERT INTO movie_data (name, total_votes, rating, duration, gross_earnings, genre) VALUES ( %s, %s, %s, %s, %s, %s)"
 
     # Convert the values to a list
     values = [record['name'], record['total_votes'], record['rating'], record['duration'], record['gross_earnings'], record['genre']]
@@ -53,7 +53,7 @@ def load(record):
 
 def reload_distinct():
 
-  movieInsert = "INSERT INTO new_movies (SELECT DISTINCT * FROM movies)"
+  movieInsert = "INSERT INTO new_data (SELECT DISTINCT * FROM movie_data)"
   mycursor.execute(movieInsert)
   mydb.commit()
 

@@ -17,7 +17,6 @@ def accommodateNull(record, columnString):
 titles = set()
 
 
-
 def transformed_record(record):
     # print('Heres the records name: ' + record['name'])
     if len(record['name']) > 80:

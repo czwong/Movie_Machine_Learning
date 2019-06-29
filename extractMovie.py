@@ -11,7 +11,7 @@ def read_movie():
     with open(csvpath, newline="") as csvfile:
         csvreader = csv.DictReader(csvfile, delimiter=",")
 
-        header = next(csvreader)
+        # header = next(csvreader)
 
         moviedata = []
 
