@@ -5,7 +5,7 @@ def read_movie():
 
     #Set path for file
     # csvpath = os.path.join("Resources/movie_metadata.csv")
-    csvpath = (r'''Resources/movie_metadata.csv''')
+    csvpath = ("upcoming_movies_2019.csv")
 
     #Open the CSV
     with open(csvpath, newline="") as csvfile:
@@ -19,16 +19,14 @@ def read_movie():
         for row in csvreader:
             data = {}
 
-            # data["name"] = row['movie_title']
-            data["name"] = row['movie_title'].split('\xa0')[0]
-            data["gross_earnings"] = row['gross']
-            data["duration"] = row['duration']
-            data["total_votes"] = row['num_voted_users']
-            data["rating"] = row['imdb_score']
-            data["genre"] = row['genres']
+            data["name"] = row['name']
+            data["image"] = row['image']
+            data["release_date"] = row['release_date']
+            data["genre"] = row['genre']
 
             #Append the dictionary to the list
             moviedata.append(data)
+            
         return moviedata
 
 if __name__ == "__main__":

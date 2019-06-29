@@ -10,32 +10,22 @@ mydb = mysql.connector.connect(
 
 drop_cursor = mydb.cursor()
 
-drop_cursor.execute(f"drop table if exists {info['database']}.movie_data")
-drop_cursor.execute(f"drop table if exists {info['database']}.new_data")
+drop_cursor.execute(f"drop table if exists {info['database']}.upcoming")
 
 mycursor = mydb.cursor()
 
-mycursor.execute \
-(f"create table {info['database']}.movie_data \
-  (movieID int NOT NULL AUTO_INCREMENT \
-  ,name varchar(80) not null\
-  ,total_votes bigint \
-  ,rating float \
-  ,duration integer \
-  ,gross_earnings bigint \
-  ,genre varchar(200) \
-  ,primary key (movieID))")
 
 mycursor.execute \
-(f"create table {info['database']}.new_data \
+(f"create table {info['database']}.upcoming \
   (movieID int NOT NULL AUTO_INCREMENT \
-  ,name varchar(80) not null\
-  ,total_votes bigint \
-  ,rating float \
-  ,duration integer \
-  ,gross_earnings bigint \
-  ,genre varchar(200) \
+  ,name varchar(255) not null \
+  ,image varchar(255) not null \
+  ,release_date varchar(255) not null \
+  ,genre varchar(255) not null \
   ,primary key (movieID))")
+
+
+
 
 def load(record):
 
@@ -50,10 +40,4 @@ def load(record):
     mydb.commit()
 
     # print(f"Imported movie {record['name']}")
-
-def reload_distinct():
-
-  movieInsert = "INSERT INTO new_data (SELECT DISTINCT * FROM movie_data)"
-  mycursor.execute(movieInsert)
-  mydb.commit()
 
