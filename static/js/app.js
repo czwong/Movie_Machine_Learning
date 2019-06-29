@@ -63,8 +63,8 @@ function movieRecommender(movie) {
                         .enter()
                         .append('div')
                         .attr('class', 'col-xs-2 col-sm-2 col-md-2')
-                        .append('p')
-                        .text(response[0].Title);
+                        .append('img')
+                        .attr('src', response[0].Poster_Image);
                 }
 
                 else {
@@ -74,8 +74,8 @@ function movieRecommender(movie) {
                         .enter()
                         .append('div')
                         .attr('class', 'col-xs-2 col-sm-2 col-md-2')
-                        .append('p')
-                        .text(response[0].Title);
+                        .append('img')
+                        .attr('src', response[0].Poster_Image);
                 }
             });
         }
@@ -122,14 +122,13 @@ submit.on("click", function () {
     for (var i = 0; i < document.getElementById("dataSet").length; i++) {
         console.log(document.getElementById("dataSet").length);
         if (document.getElementById("dataSet").options[i].value === inputValue) {
-            console.log("wow");
-            optionChanged(inputValue);
+            moviedata(inputValue);
         }
 
         else {
             d3.select("#movie_data_body").append("h1")
                 .attr("class", "nothing_found")
-                .text("No results found for" + inputValue);
+                .text("No results found for " + inputValue);
         }
     }
 });

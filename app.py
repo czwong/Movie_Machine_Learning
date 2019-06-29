@@ -19,7 +19,7 @@ app = Flask(__name__)
 # Database Setup
 #################################################
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db/movies_2019.sqlite"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db/allmoviedata.sqlite"
 db = SQLAlchemy(app)
 
 # Reflect an existing database into a new model
@@ -29,7 +29,8 @@ Base = automap_base()
 Base.prepare(db.engine, reflect=True)
 
 # Save references to each table
-Movies = Base.classes.movies
+Movies = Base.classes.new_data
+Images = Base.classes.new_images
 
 
 @app.route("/")
@@ -53,10 +54,11 @@ def find(movie):
         Movies.rating,
         Movies.duration,
         Movies.gross_earnings,
-        Movies.image
+        Images.image
     ]
 
-    table = db.session.query(*sel).group_by(Movies.name).\
+    table = db.session.query(*sel).join(Movies, Movies.name == Images.name).\
+        group_by(Movies.name).\
         filter(Movies.name == movie).all()
 
     movie_data = []
@@ -76,8 +78,11 @@ import sqlite3
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import linear_kernel
 
-cnx = sqlite3.connect('db/movie_data.sqlite')
-df = pd.read_sql_query("SELECT * FROM movies", cnx)
+cnx = sqlite3.connect('db/allmoviedata.sqlite')
+df_movie = pd.read_sql_query("SELECT * FROM new_data", cnx)
+df_img = pd.read_sql_query("SELECT * FROM new_images", cnx)
+df = pd.merge(df_movie, df_img, on='name')
+df = df.drop_duplicates(subset="name")
 
 # Break up the big genre string into a string array
 df['genre'] = df['genre'].str.split('|')
@@ -95,7 +100,7 @@ indices = pd.Series(df.index, index=df['name'])
 
 # Function that get movie recommendations based on the cosine similarity score of movie genres
 def genre_recommendations(title):
-    newtitle = title + '\xa0'
+    newtitle = title
     idx = indices[newtitle]
     print(idx)
     sim_scores = list(enumerate(cosine_sim[idx]))
