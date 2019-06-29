@@ -7,7 +7,10 @@ function moviedata(movie) {
     var movie_data = d3.select("body > div > div:nth-child(1) > div.col-lg-8 > div > div:nth-child(2) > div:nth-child(2)");
 
     d3.json(url).then(function (response) {
+
         // Use `.html("") to clear any existing data
+        movie_data_title.html("");
+        movie_data_img.html("");
         movie_data.html("");
 
         movie_data_title.selectAll('h1')
@@ -42,7 +45,6 @@ function movieRecommender(movie) {
 
     var carousel_group = [carousel_1, carousel_2, carousel_3];
     let carousel_count = 0;
-
 
     d3.json(movieList_url).then(function (movieList) {
         carousel_1.html("");
@@ -104,9 +106,37 @@ function init() {
 // Initialize the dashboard
 init();
 
+// Select the submit and clear button
+var submit = d3.select("#submit-btn");
+var clear = d3.select("#clear-btn");
+
+submit.on("click", function () {
+    d3.event.preventDefault();
+
+    // Select the input element and get the raw HTML node
+    var inputElement = d3.select("#input");
+
+    // Get the value property of the input element
+    var inputValue = inputElement.property("value");
+
+    for (var i = 0; i < document.getElementById("dataSet").length; i++) {
+        console.log(document.getElementById("dataSet").length);
+        if (document.getElementById("dataSet").options[i].value == inputValue) {
+            console.log("wow");
+            optionChanged(movie);
+        }
+
+        else {
+            d3.select("#movie_data_body").append("h1")
+                .attr("class", "nothing_found")
+                .text("No Movie Found");
+        }
+    }
+});
+
 function optionChanged(newMovie) {
     // Fetch new data each time a new movie is selected
-    //moviedata(newMovie)
+    moviedata(newMovie)
     movieRecommender(newMovie)
 }   
 

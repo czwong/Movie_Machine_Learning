@@ -19,7 +19,7 @@ app = Flask(__name__)
 # Database Setup
 #################################################
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db/movie_data.sqlite"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db/movies_2019.sqlite"
 db = SQLAlchemy(app)
 
 # Reflect an existing database into a new model
@@ -52,8 +52,8 @@ def find(movie):
         Movies.name,
         Movies.rating,
         Movies.duration,
-        Movies.gross_earnings
-        # Movies.image
+        Movies.gross_earnings,
+        Movies.image
     ]
 
     table = db.session.query(*sel).group_by(Movies.name).\
@@ -66,7 +66,7 @@ def find(movie):
         movie["Rating"] = results[1]
         movie["Duration"] = results[2]
         movie["Gross_Earning"] = results[3]
-        # movie["Poster_Image"] = results[4]
+        movie["Poster_Image"] = results[4]
         movie_data.append(movie)
 
     return jsonify(movie_data)
@@ -107,11 +107,11 @@ def genre_recommendations(title):
 
 @app.route("/movie_recommendation/<movie>")
 def movie_recommender(movie):
-    movie_recommendation = genre_recommendations('Spectre').head(18).tolist()
+    movie_recommendation = genre_recommendations(movie).head(18).tolist()
 
-    # movie_recommendation_list = []
-    # for recommendation in movie_recommendation:
-    #     movie_recommendation_list.append(recommendation.replace('\xa0', ''))
+    movie_recommendation_list = []
+    for recommendation in movie_recommendation:
+        movie_recommendation_list.append(recommendation.replace('\xa0', ''))
 
     return jsonify(movie_recommendation)
 
