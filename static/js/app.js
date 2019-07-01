@@ -13,26 +13,36 @@ function moviedata(movie) {
         movie_data_img.html("");
         movie_data.html("");
 
-        movie_data_title.selectAll('h1')
-            .data(response)
-            .enter()
-            .append('h1')
-            .attr('class', 'title_heading')
-            .text(response[0].Title);
+        try {
+            movie_data_title.selectAll('h1')
+                .data(response)
+                .enter()
+                .append('h1')
+                .attr('class', 'title_heading')
+                .text(response[0].Title);
 
-        movie_data_img.selectAll('img')
-            .data(response)
-            .enter()
-            .append('img')
-            .attr('src', response[0].Poster_Image)
-            .attr('height', 'auto')
-            .attr('width', 'auto');
+            movie_data_img.selectAll('img')
+                .data(response)
+                .enter()
+                .append('img')
+                .attr('src', response[0].Poster_Image)
+                .attr('height', 'auto')
+                .attr('width', 'auto');
 
-        //movie_data.selectAll('p')
-        //    .data(response)
-        //    .enter()
-        //    .append('p')
-        //    .text(response[0].)
+            //movie_data.selectAll('p')
+            //    .data(response)
+            //    .enter()
+            //    .append('p')
+            //    .text(response[0].)
+        }
+
+        catch (err) {
+            message = d3.select("#movie_data_body");
+            message.html("");
+            message.append("h1")
+                .attr("class", "nothing_found")
+                .text("No results found for " + movie);
+        }
     });
 }
 
@@ -51,33 +61,43 @@ function movieRecommender(movie) {
         carousel_2.html("");
         carousel_3.html("");
 
-        movieList.forEach(searchMovie);
+        try {
+            movieList.forEach(searchMovie);
 
-        function searchMovie(movie) {
-            var movie_url = "/movies/" + `${movie}`;
+            function searchMovie(movie) {
+                var movie_url = "/movies/" + `${movie}`;
 
-            d3.json(movie_url).then(function (response) {
-                if (carousel_group[carousel_count]._groups[0][0].childElementCount < 6) {
-                    carousel_group[carousel_count].selectAll('div.carousel-item')
-                        .data(response)
-                        .enter()
-                        .append('div')
-                        .attr('class', 'col-xs-2 col-sm-2 col-md-2')
-                        .append('img')
-                        .attr('src', response[0].Poster_Image);
-                }
+                d3.json(movie_url).then(function (response) {
+                    if (carousel_group[carousel_count]._groups[0][0].childElementCount < 6) {
+                        carousel_group[carousel_count].selectAll('div.carousel-item')
+                            .data(response)
+                            .enter()
+                            .append('div')
+                            .attr('class', 'col-xs-2 col-sm-2 col-md-2')
+                            .append('img')
+                            .attr('src', response[0].Poster_Image);
+                    }
 
-                else {
-                    carousel_count++;
-                    carousel_group[carousel_count].selectAll('div.carousel-item')
-                        .data(response)
-                        .enter()
-                        .append('div')
-                        .attr('class', 'col-xs-2 col-sm-2 col-md-2')
-                        .append('img')
-                        .attr('src', response[0].Poster_Image);
-                }
-            });
+                    else {
+                        carousel_count++;
+                        carousel_group[carousel_count].selectAll('div.carousel-item')
+                            .data(response)
+                            .enter()
+                            .append('div')
+                            .attr('class', 'col-xs-2 col-sm-2 col-md-2')
+                            .append('img')
+                            .attr('src', response[0].Poster_Image);
+                    }
+                })
+            }
+        }
+
+        catch (err) {
+            message = d3.select("body > div > div:nth-child(2)");
+            message.html("");
+            message.append("h1")
+                .attr("class", "nothing_found_bottom")
+                .text("No results found for " + movie);
         }
     });
 }
@@ -108,7 +128,6 @@ init();
 
 // Select the submit and clear button
 var submit = d3.select("#submit-btn");
-var clear = d3.select("#clear-btn");
 
 submit.on("click", function () {
     d3.event.preventDefault();
@@ -119,18 +138,7 @@ submit.on("click", function () {
     // Get the value property of the input element
     var inputValue = inputElement.property("value");
 
-    for (var i = 0; i < document.getElementById("dataSet").length; i++) {
-        console.log(document.getElementById("dataSet").length);
-        if (document.getElementById("dataSet").options[i].value === inputValue) {
-            moviedata(inputValue);
-        }
-
-        else {
-            d3.select("#movie_data_body").append("h1")
-                .attr("class", "nothing_found")
-                .text("No results found for " + inputValue);
-        }
-    }
+    optionChanged(inputValue);
 });
 
 function optionChanged(newMovie) {

@@ -111,7 +111,11 @@ def genre_recommendations(title):
 
 @app.route("/movie_recommendation/<movie>")
 def movie_recommender(movie):
-    movie_recommendation = genre_recommendations(movie).head(18).tolist()
+    try:
+        movie_recommendation = genre_recommendations(movie).head(18).tolist()
+
+    except KeyError:
+        movie_recommendation = []
 
     return jsonify(movie_recommendation)
 

@@ -55,6 +55,24 @@ select {
   opacity: 1;
 }
 
+h1.nothing_found {
+  margin: auto;
+  padding: auto;
+}
+
+h1.nothing_found_bottom {
+  font-size: 500%;
+  font-weight: bold;
+  color: black;
+  margin: auto;
+}
+
+div.movie_recommend_header {
+  margin: auto;
+  padding: auto;
+  color: white;
+}
+
 #demo {
   width: 100%;
 }
@@ -87,12 +105,3 @@ body .no-padding {
   padding-left: 0px;
   padding-right: 0px;
 }
-
-/* .nfl-logo {
-  position: absolute;
-  height: auto;
-  width: 4%;
-  bottom: 6px;
-  left: 120px;
-  color: white;
-} */
