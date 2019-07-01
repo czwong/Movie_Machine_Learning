@@ -41,7 +41,7 @@ def index():
 
 @app.route("/movie_title")
 def movies():
-    movies = db.session.query(Movies.name).distinct()
+    movies = db.session.query(Movies.name).order_by(Movies.name.asc()).distinct()
 
     # Return a list of the column names (team names)
     return jsonify(list(movies))
@@ -102,7 +102,6 @@ indices = pd.Series(df.index, index=df['name'])
 def genre_recommendations(title):
     newtitle = title
     idx = indices[newtitle]
-    print(idx)
     sim_scores = list(enumerate(cosine_sim[idx]))
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
     sim_scores = sim_scores[1:21]
@@ -113,10 +112,6 @@ def genre_recommendations(title):
 @app.route("/movie_recommendation/<movie>")
 def movie_recommender(movie):
     movie_recommendation = genre_recommendations(movie).head(18).tolist()
-
-    movie_recommendation_list = []
-    for recommendation in movie_recommendation:
-        movie_recommendation_list.append(recommendation.replace('\xa0', ''))
 
     return jsonify(movie_recommendation)
 
