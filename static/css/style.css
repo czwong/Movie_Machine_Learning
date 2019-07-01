@@ -4,7 +4,7 @@
 } */
 
 .navbar {
-  background-color: black;
+  color: white;
 }
 
 .filters {
@@ -70,7 +70,7 @@ h1.nothing_found_bottom {
 div.movie_recommend_header {
   margin: auto;
   padding: auto;
-  color: white;
+  color: black;
 }
 
 #demo {
