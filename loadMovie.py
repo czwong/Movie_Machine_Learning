@@ -1,6 +1,7 @@
 import mysql.connector
 from config import info
 
+#Connection settings
 mydb = mysql.connector.connect(
     host=info["host"],
     user=info["username"],
@@ -10,11 +11,13 @@ mydb = mysql.connector.connect(
 
 drop_cursor = mydb.cursor()
 
+#Drop table if exists
 drop_cursor.execute(f"drop table if exists {info['database']}.movie_data")
 drop_cursor.execute(f"drop table if exists {info['database']}.new_data")
 
 mycursor = mydb.cursor()
 
+#Table Schema
 mycursor.execute \
 (f"create table {info['database']}.movie_data \
   (movieID int NOT NULL AUTO_INCREMENT \
@@ -48,8 +51,6 @@ def load(record):
     print("Loaded " + record['name'])
 
     mydb.commit()
-
-    # print(f"Imported movie {record['name']}")
 
 def reload_distinct():
 

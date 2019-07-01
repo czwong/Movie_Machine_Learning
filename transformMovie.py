@@ -1,12 +1,14 @@
 import loadMovie 
 from extractMovie import read_movie
 
+#Create function to remove rows with missing values for each column 
 def clean_data(record):
     if 'gross_earnings' not in record.keys() or record['gross_earnings'] == None or 'duration' not in record.keys() or not record['duration']: 
         del record
     else:
         return record
 
+#Look for empty values in columns 
 def accommodateNull(record, columnString):
     if len(record[columnString]) == 0:
         print('Found a null: ' + columnString)
@@ -18,22 +20,10 @@ titles = set()
 
 
 def transformed_record(record):
-    # print('Heres the records name: ' + record['name'])
+    #Return dictionary with data
     if len(record['name']) > 80:
         record['name'] = record['name'][0:80]
-    # if record['name'] not in titles:
-    #     titles.add(record['name'])
-    #     return {
-    #         "name": record['name'],
-    #         "total_votes": accommodateNull(record, 'total_votes'),
-    #         "rating": float(record['rating']),
-    #         "duration": int(record['duration']),
-    #         "gross_earnings": accommodateNull(record, 'gross_earnings'),
-    #         "genre": record['genre']
-    #     }
-    # else:
-    #     print(record['name'] + " already in titles")
-    #     return False
+
     return {
             "name": record['name'],
             "total_votes": accommodateNull(record, 'total_votes'),
@@ -45,10 +35,12 @@ def transformed_record(record):
 
 
 def transform_data(data):
+    #Loop through each row in the dictioanry
     for d in data:
         cleaned_data = clean_data(d)
         if cleaned_data:
             transformed = transformed_record(cleaned_data)
+            #Load into MySQL database
             if transformed:
                 loadMovie.load(transformed)
 
