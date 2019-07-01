@@ -29,11 +29,9 @@ function moviedata(movie) {
                 .attr('height', 'auto')
                 .attr('width', 'auto');
 
-            //movie_data.selectAll('p')
-            //    .data(response)
-            //    .enter()
-            //    .append('p')
-            //    .text(response[0].)
+            movie_data.html('<p><b>Ratings: </b>' + response[0].Ratings + '</p>');
+            movie_data.html('<p><b>Duration: </b>' + response[0].Duration + '</p>');
+            movie_data.html('<p><b>Gross Earning: </b>$' + parseInt(response[0].Gross_Earning) + '</p>');
         }
 
         catch (err) {
