@@ -42,9 +42,6 @@ function moviedata(movie) {
                 .attr('class', 'gross earning')
                 .text('Gross Earning: $' + parseInt(response[0].Gross_Earning).toLocaleString())
 
-            // movie_data.html('<p><b>Ratings: </b>' + response[0].Ratings + '</p>');
-            // movie_data.html('<p><b>Duration: </b>' + response[0].Duration + '</p>');
-            // movie_data.html('<p><b>Gross Earning: </b>$' + parseInt(response[0].Gross_Earning) + '</p>');
 
         }
 
