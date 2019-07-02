@@ -33,10 +33,6 @@ select {
   border-color:black;
 }
 
-/* .col-lg-8 {
-
-} */
-
 .jumbotron {
   margin: 10px;
   padding: 5px;
@@ -76,10 +72,20 @@ div.movie_recommend_header {
   margin: auto;
   padding: auto;
   color: black;
+  text-align: left;
 }
 
 h1.movie_recommend_title {
   text-align: left;
+}
+
+.rating, .duration, .gross_earning, .genre, .total_votes {
+  font-weight: bold;
+}
+
+p {
+  font-weight: normal;
+  display: inline-block; 
 }
 
 #demo {
