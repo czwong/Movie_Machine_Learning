@@ -54,6 +54,8 @@ def find(movie):
         Movies.rating,
         Movies.duration,
         Movies.gross_earnings,
+        Movies.genre,
+        Movies.total_votes,
         Images.image
     ]
 
@@ -68,7 +70,9 @@ def find(movie):
         movie["Rating"] = results[1]
         movie["Duration"] = results[2]
         movie["Gross_Earning"] = results[3]
-        movie["Poster_Image"] = results[4]
+        movie["Genre"] = results[4].replace("|", ", ")
+        movie["Total_Votes"] = results[5]
+        movie["Poster_Image"] = results[6]
         movie_data.append(movie)
 
     return jsonify(movie_data)

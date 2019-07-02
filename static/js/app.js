@@ -41,8 +41,12 @@ function moviedata(movie) {
                 .append('p')
                 .attr('class', 'gross earning')
                 .text('Gross Earning: $' + parseInt(response[0].Gross_Earning).toLocaleString())
-
-
+                .append('p')
+                .attr('class', 'genre')
+                .text('Genre: ' + response[0].Genre)
+                .append('p')
+                .attr('class', 'total votes')
+                .text('Total Votes: ' + parseInt(response[0].Total_Votes). toLocaleString())
         }
 
         catch (err) {
