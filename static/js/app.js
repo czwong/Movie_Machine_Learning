@@ -29,24 +29,12 @@ function moviedata(movie) {
                 .attr('height', 'auto')
                 .attr('width', 'auto');
 
-            movie_data.selectAll('p')
-                .data(response)
-                .enter()
-                .append('p')
-                .attr('class', 'rating')
-                .text('IMDB Rating: ' + response[0].Rating)
-                .append('p')
-                .attr('class', 'duration')
-                .text('Duration: ' + response[0].Duration + ' minutes')
-                .append('p')
-                .attr('class', 'gross earning')
-                .text('Gross Earning: $' + parseInt(response[0].Gross_Earning).toLocaleString())
-                .append('p')
-                .attr('class', 'genre')
-                .text('Genre: ' + response[0].Genre)
-                .append('p')
-                .attr('class', 'total votes')
-                .text('Total Votes: ' + parseInt(response[0].Total_Votes). toLocaleString())
+            movie_data.append('p').text('IMDB Rating: ' + response[0].Rating)
+            movie_data.append('p').text('Duration: ' + response[0].Duration + ' minutes')
+            movie_data.append('p').text('Gross Earnings: $' + parseInt(response[0].Gross_Earning).toLocaleString())
+            movie_data.append('p').text('Genre: ' + response[0].Genre)
+            movie_data.append('p').text('Total Votes: ' + parseInt(response[0].Total_Votes). toLocaleString())
+
         }
 
         catch (err) {
