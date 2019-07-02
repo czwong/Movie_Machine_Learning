@@ -38,7 +38,7 @@ select {
   padding: 5px;
   background-color:white;
   opacity: 0.80;
-  font-size: 30px;
+  font-size: 25px;
 }
 
 .title_heading { 
@@ -69,10 +69,10 @@ h1.nothing_found_bottom {
 }
 
 div.movie_recommend_header {
-  margin: auto;
+  /* margin: auto; */
+  margin-left: 175px;
   padding: auto;
-  color: black;
-  text-align: left;
+  color: white;
 }
 
 h1.movie_recommend_title {
