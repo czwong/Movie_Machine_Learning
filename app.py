@@ -84,9 +84,10 @@ from sklearn.metrics.pairwise import linear_kernel
 
 cnx = sqlite3.connect('db/allmoviedata.sqlite')
 df_movie = pd.read_sql_query("SELECT * FROM new_data", cnx)
+df_movie = df_movie.drop_duplicates(subset="name")
 df_img = pd.read_sql_query("SELECT * FROM new_images", cnx)
-df = pd.merge(df_movie, df_img, on='name')
-df = df.drop_duplicates(subset="name")
+df_img = df_img.drop_duplicates(subset="name")
+df = pd.merge(df_movie, df_img, how="inner", on='name')
 
 # Break up the big genre string into a string array
 df['genre'] = df['genre'].str.split('|')
@@ -111,12 +112,24 @@ def genre_recommendations(title):
     sim_scores = sim_scores[1:21]
     movie_indices = [i[0] for i in sim_scores]
     return titles.iloc[movie_indices]
- 
+
+def clean_movies(title):
+    movies = genre_recommendations(title).head(19).tolist()
+    counter = 0
+    for movie in movies:
+        if movie == title:
+            movies.remove(movie)
+            counter += 1
+
+    if counter == 0:
+        del movies[-1]
+    
+    return movies
 
 @app.route("/movie_recommendation/<movie>")
 def movie_recommender(movie):
     try:
-        movie_recommendation = genre_recommendations(movie).head(18).tolist()
+        movie_recommendation = clean_movies(movie)
 
     except KeyError:
         movie_recommendation = []
