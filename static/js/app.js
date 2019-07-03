@@ -3,8 +3,11 @@ function moviedata(movie) {
 
     // Use d3 to select the div panel with class of `#jumbotron`
     var movie_data_title = d3.select("body > div > div:nth-child(1) > div.col-lg-8 > div > div:nth-child(1) > div");
-    var movie_data_img = d3.select("body > div > div:nth-child(1) > div.col-lg-8 > div > div:nth-child(2) > div:nth-child(1)");
-    var movie_data = d3.select("body > div > div:nth-child(1) > div.col-lg-8 > div > div:nth-child(2) > div:nth-child(2)");
+    var movie_data_img = d3.select("#movie_data_body > div.col-6.text-center");
+    var movie_data = d3.select("#movie_data_body > div:nth-child(2)");
+    var movie_recommend_row = d3.select("body > div > div:nth-child(3)");
+
+    movie_recommend_row.classed('d-none', false);
 
     d3.json(url).then(function (response) {
 
@@ -34,18 +37,16 @@ function moviedata(movie) {
             movie_data.append('div').attr('class', 'gross_earning').text('Gross Earnings: $').append('p').text(parseInt(response[0].Gross_Earning).toLocaleString())
             movie_data.append('div').attr('class', 'genre').text('Genre: ').append('p').text(response[0].Genre)
             movie_data.append('div').attr('class', 'total_votes').text('Total Votes: ').append('p').text(parseInt(response[0].Total_Votes). toLocaleString())
-            // movie_data.append('p').text('Duration: ' + response[0].Duration + ' minutes')
-            // movie_data.append('p').text('Gross Earnings: $' + parseInt(response[0].Gross_Earning).toLocaleString())
-            // movie_data.append('p').text('Genre: ' + response[0].Genre)
-            // movie_data.append('p').text('Total Votes: ' + parseInt(response[0].Total_Votes). toLocaleString())
         }
 
         catch (err) {
-            message = d3.select("#movie_data_body");
+            var message = d3.select("body > div > div:nth-child(1) > div.col-lg-8 > div > div:nth-child(1) > div");
             message.html("");
             message.append("h1")
                 .attr("class", "nothing_found")
                 .text("No results found for " + movie);
+
+            movie_recommend_row.classed('d-none', true);
         }
     });
 }
@@ -90,7 +91,8 @@ function movieRecommender(movie) {
                             .append('div')
                             .attr('class', 'col-xs-2 col-sm-2 col-md-2')
                             .append('img')
-                            .attr('src', response[0].Poster_Image);
+                            .attr('src', response[0].Poster_Image)
+                            .attr('href', "#");
                     }
                 })
             }
@@ -149,9 +151,4 @@ function optionChanged(newMovie) {
     // Fetch new data each time a new movie is selected
     moviedata(newMovie)
     movieRecommender(newMovie)
-}   
-
-//$('select').on('change', function () {
-//    var team = this.value;
-//    localStorage.setItem("x", team);
-//});
+}
