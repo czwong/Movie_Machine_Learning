@@ -57,9 +57,12 @@ function movieRecommender(movie) {
     var carousel_1 = d3.select("#demo > div > div:nth-child(1)");
     var carousel_2 = d3.select("#demo > div > div:nth-child(2)");
     var carousel_3 = d3.select("#demo > div > div:nth-child(3)");
+    var movie_recommend_row = d3.select("body > div > div:nth-child(3)");
 
     var carousel_group = [carousel_1, carousel_2, carousel_3];
     let carousel_count = 0;
+
+    //movie_recommend_row.classed('d-none', true)
 
     d3.json(movieList_url).then(function (movieList) {
         carousel_1.html("");
@@ -79,6 +82,8 @@ function movieRecommender(movie) {
                             .enter()
                             .append('div')
                             .attr('class', 'col-xs-2 col-sm-2 col-md-2')
+                            .append('a')
+                            .attr('href', '#').attr('class', 'img-zoom-hover').attr('value', movie)
                             .append('img')
                             .attr('src', response[0].Poster_Image);
                     }
@@ -90,20 +95,23 @@ function movieRecommender(movie) {
                             .enter()
                             .append('div')
                             .attr('class', 'col-xs-2 col-sm-2 col-md-2')
+                            .append('a')
+                            .attr('href', '#').attr('class', 'img-zoom-hover').attr('value', movie)
                             .append('img')
-                            .attr('src', response[0].Poster_Image)
-                            .attr('href', "#");
+                            .attr('src', response[0].Poster_Image);
                     }
                 })
             }
         }
 
         catch (err) {
-            message = d3.select("body > div > div:nth-child(2)");
+            var message = d3.select("body > div > div:nth-child(1) > div.col-lg-8 > div > div:nth-child(1) > div");
             message.html("");
             message.append("h1")
-                .attr("class", "nothing_found_bottom")
+                .attr("class", "nothing_found")
                 .text("No results found for " + movie);
+
+            movie_recommend_row.classed('d-none', true);
         }
     });
 }
@@ -146,6 +154,16 @@ submit.on("click", function () {
 
     optionChanged(inputValue);
 });
+
+var suggested_movies = document.getElementsByClassName('img-zoom-hover');
+
+for (var i = 0; i < suggested_movies.length; i++) {
+    console.log(suggested_movies[i]);
+    //suggested_movies[i].onclick = function () {
+    //    console.log(suggested_movies[i].value);
+    //    optionChanged(suggested_movies[i].value);
+    //}
+};
 
 function optionChanged(newMovie) {
     // Fetch new data each time a new movie is selected

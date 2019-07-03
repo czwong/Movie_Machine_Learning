@@ -59,18 +59,12 @@ select {
 h1.nothing_found {
   margin: auto;
   padding: auto;
-}
-
-h1.nothing_found_bottom {
-  font-size: 500%;
   font-weight: bold;
   color: black;
-  margin: auto;
 }
 
 div.movie_recommend_header {
-  /* margin: auto; */
-  margin-left: 175px;
+  margin-left: 5%;
   padding: auto;
   color: white;
 }
@@ -88,16 +82,24 @@ p {
   display: inline-block; 
 }
 
+.img-zoom-hover img {
+  transition: transform .4s ease;
+}
+
+.img-zoom-hover:hover img {
+  transform: scale(1.2);
+}
+
 #demo {
   width: 100%;
 }
 
 .col-md-2 {
   display: inline-block;
-  margin-left:-4px;
+  /* margin-left:-4px; */
 }
 
-.col-md-2 img{
+.col-md-2 img {
   width:100%;
   height:auto;
 }
