@@ -83,7 +83,7 @@ function movieRecommender(movie) {
                             .append('div')
                             .attr('class', 'col-xs-2 col-sm-2 col-md-2')
                             .append('a')
-                            .attr('href', '#').attr('class', 'img-zoom-hover').attr('value', movie)
+                            .attr('href', '#').attr('class', 'img-zoom-hover').property("value", movie)
                             .append('img')
                             .attr('src', response[0].Poster_Image);
                     }
@@ -96,11 +96,11 @@ function movieRecommender(movie) {
                             .append('div')
                             .attr('class', 'col-xs-2 col-sm-2 col-md-2')
                             .append('a')
-                            .attr('href', '#').attr('class', 'img-zoom-hover').attr('value', movie)
+                            .attr('href', '#').attr('class', 'img-zoom-hover').property("value", movie)
                             .append('img')
                             .attr('src', response[0].Poster_Image);
                     }
-                })
+                });
             }
         }
 
@@ -153,20 +153,17 @@ submit.on("click", function () {
     var inputValue = inputElement.property("value");
 
     optionChanged(inputValue);
+
+    d3.select("#dataSet").property('value', inputValue);
 });
-
-var suggested_movies = document.getElementsByClassName('img-zoom-hover');
-
-for (var i = 0; i < suggested_movies.length; i++) {
-    console.log(suggested_movies[i]);
-    //suggested_movies[i].onclick = function () {
-    //    console.log(suggested_movies[i].value);
-    //    optionChanged(suggested_movies[i].value);
-    //}
-};
 
 function optionChanged(newMovie) {
     // Fetch new data each time a new movie is selected
     moviedata(newMovie)
     movieRecommender(newMovie)
+
+    var suggested_movies = document.getElementsByClassName("img-zoom-hover");
+    //for (var i = 0; i < suggested_movies.length; i++) {
+    //    suggested_movies[i].addEventListener("click", optionChanged(suggested_movies[i].value));
+    //}
 }
