@@ -19,7 +19,7 @@ app = Flask(__name__)
 # Database Setup
 #################################################
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db/allmoviedata.sqlite"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db/newfinaldata.sqlite"
 db = SQLAlchemy(app)
 
 # Reflect an existing database into a new model
@@ -29,8 +29,8 @@ Base = automap_base()
 Base.prepare(db.engine, reflect=True)
 
 # Save references to each table
-Movies = Base.classes.new_data
-Images = Base.classes.new_images
+Movies = Base.classes.movie_data
+Images = Base.classes.images
 
 
 @app.route("/")
@@ -41,7 +41,8 @@ def index():
 
 @app.route("/movie_title")
 def movies():
-    movies = db.session.query(Movies.name).order_by(Movies.name.asc()).distinct()
+    # movies = db.session.query(Movies.name).order_by(Movies.name.asc()).distinct()
+    movies = db.session.query(Movies.name).filter(Movies.name == Images.name).order_by(Movies.name.asc()).distinct()
 
     # Return a list of the column names (team names)
     return jsonify(list(movies))
@@ -59,8 +60,11 @@ def find(movie):
         Images.image
     ]
 
+    # table = db.session.query(*sel).join(Movies, Movies.name == Images.name).\
+    #     group_by(Movies.name).\
+    #     filter(Movies.name == movie).all()
+
     table = db.session.query(*sel).join(Movies, Movies.name == Images.name).\
-        group_by(Movies.name).\
         filter(Movies.name == movie).all()
 
     movie_data = []
@@ -82,11 +86,11 @@ import sqlite3
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import linear_kernel
 
-cnx = sqlite3.connect('db/allmoviedata.sqlite')
-df_movie = pd.read_sql_query("SELECT * FROM new_data", cnx)
-df_movie = df_movie.drop_duplicates(subset="name")
-df_img = pd.read_sql_query("SELECT * FROM new_images", cnx)
-df_img = df_img.drop_duplicates(subset="name")
+cnx = sqlite3.connect('db/newfinaldata.sqlite')
+df_movie = pd.read_sql_query("SELECT * FROM movie_data", cnx)
+# df_movie = df_movie.drop_duplicates(subset="name")
+df_img = pd.read_sql_query("SELECT * FROM images", cnx)
+# df_img = df_img.drop_duplicates(subset="name")
 df = pd.merge(df_movie, df_img, how="inner", on='name')
 
 # Break up the big genre string into a string array
@@ -109,7 +113,7 @@ def genre_recommendations(title):
     idx = indices[newtitle]
     sim_scores = list(enumerate(cosine_sim[idx]))
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
-    sim_scores = sim_scores[1:21]
+    sim_scores = sim_scores[0:21]
     movie_indices = [i[0] for i in sim_scores]
     return titles.iloc[movie_indices]
 
