@@ -34,7 +34,7 @@ function moviedata(movie) {
 
             movie_data.append('div').attr('class', 'rating').text('IMDB Rating: ').append('p').text(response[0].Rating)
             movie_data.append('div').attr('class', 'duration').text('Duration: ').append('p').text(response[0].Duration + ' minutes')
-            movie_data.append('div').attr('class', 'gross_earning').text('Gross Earnings: $').append('p').text(parseInt(response[0].Gross_Earning).toLocaleString())
+            movie_data.append('div').attr('class', 'gross_earning').text('Gross Earnings: ').append('p').text('$' + parseInt(response[0].Gross_Earning).toLocaleString())
             movie_data.append('div').attr('class', 'genre').text('Genre: ').append('p').text(response[0].Genre)
             movie_data.append('div').attr('class', 'total_votes').text('Total Votes: ').append('p').text(parseInt(response[0].Total_Votes). toLocaleString())
         }

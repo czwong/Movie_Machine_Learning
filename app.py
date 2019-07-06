@@ -38,6 +38,11 @@ def index():
     """Return the homepage."""
     return render_template("index.html")
 
+@app.route("/dataexploration")
+def dataexploration():
+    """Return data exploration page."""
+    return render_template("dataexploration.html")
+
 
 @app.route("/movie_title")
 def movies():
