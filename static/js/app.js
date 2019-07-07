@@ -163,7 +163,11 @@ function optionChanged(newMovie) {
     movieRecommender(newMovie)
 
     var suggested_movies = document.getElementsByClassName("img-zoom-hover");
-    //for (var i = 0; i < suggested_movies.length; i++) {
-    //    suggested_movies[i].addEventListener("click", optionChanged(suggested_movies[i].value));
-    //}
+    for (var i = 0; i < suggested_movies.length; i++) {
+        suggested_movies[i].addEventListener("click", function (event) {
+            event.preventDefault();
+            console.log("wow");
+            //optionChanged(this.value);
+        }, false);
+    }
 }
