@@ -190,60 +190,103 @@ def upcoming_find(movie):
 
     return jsonify(movie_data)
 
-
-upcoming_df = pd.read_sql_query("SELECT * FROM upcoming", cnx)
-# df_movie = df_movie.drop_duplicates(subset="name")
-# df_img = pd.read_sql_query("SELECT * FROM images", cnx)
-# df_img = df_img.drop_duplicates(subset="name")
-# df = pd.merge(df_movie, df_img, how="inner", on='name')
-
-# Break up the big genre string into a string array
-upcoming_df['genre'] = upcoming_df['genre'].str.split(',')
-
-# Convert genres to string value
-upcoming_df['genre'] = upcoming_df['genre'].fillna("").astype('str')
-
-# tf = TfidfVectorizer(analyzer='word',ngram_range=(1, 2),min_df=0, stop_words='english')
-tfidf_matrix_upcoming = tf.fit_transform(upcoming_df['genre'])
-cosine_sim_upcoming = linear_kernel(tfidf_matrix_upcoming, tfidf_matrix_upcoming)
-
-# Build a 1-dimensional array with movie titles
-upcoming_titles = df['name']
-upcoming_indices = pd.Series(upcoming_df.index, index=df['name'])
+#########################################################
+# still need to do some change, i haven't checked details
+#########################################################
 
 # Function that get movie recommendations based on the cosine similarity score of movie genres
-def genre_recommendations(title):
-    newtitle = title
-    idx = indices[newtitle]
+def recommend_upcoming(movie_name, genre):
+
+    cnx = sqlite3.connect('db/newfinaldata.sqlite')
+    df_upcoming = pd.read_sql_query("SELECT * FROM upcoming", cnx)
+    
+    # drop unnecessary column
+    df_upcoming = df_upcoming[['name', 'genre']]
+    
+    # print(df_upcoming.head())
+
+    # Break up the big genre string into a string array
+    df_upcoming['genre'] = df_upcoming['genre'].str.split(',')
+    
+    # print(df_upcoming.head())
+
+    dict1 = {
+         "name": movie_name['Title'],
+         "genre": genre
+    }
+    
+    print(dict1)
+    
+    ref_df = pd.DataFrame(dict1, index = [0])
+    ref_df['genre'] = ref_df['genre'].str.split('|')
+    # ref_df['genre'] = ref_df['genre'].fillna("").astype('str')
+    print(ref_df)
+    
+    
+    df_upcoming = df_upcoming.append(ref_df, ignore_index=True)
+    
+    # print(df_upcoming.tail())
+
+    # Convert genres to string value
+    df_upcoming['genre'] = df_upcoming['genre'].fillna("").astype('str')
+    # print(df_upcoming.tail())
+
+    tf = TfidfVectorizer(analyzer='word',ngram_range=(1, 2),min_df=0, stop_words='english')
+    tfidf_matrix = tf.fit_transform(df_upcoming['genre'])
+    # print(tfidf_matrix)
+    cosine_sim = linear_kernel(tfidf_matrix, tfidf_matrix)
+    # print(cosine_sim)
+    
+
+    # Build a 1-dimensional array with movie titles
+    titles = df_upcoming['name']
+    indices = pd.Series(df_upcoming.index, index=df_upcoming['name'])
+    # print(indices)
+
+    idx = indices[movie_name['Title']]
     sim_scores = list(enumerate(cosine_sim[idx]))
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
-    sim_scores = sim_scores[0:21]
+    sim_scores = sim_scores[0:3]
     movie_indices = [i[0] for i in sim_scores]
-    return titles.iloc[movie_indices]
 
-def clean_movies(title):
-    movies = genre_recommendations(title).head(19).tolist()
+    recommendations =  titles.iloc[movie_indices]
+
+    return recommendations
+
+def get_genre(movie):
+    sel = [
+        Movies.name,
+        Movies.genre
+    ]
+
+    table = session.query(*sel).filter(Movies.name == movie).all()
+    print(table)
+
+    movie_data = []
+    for results in table:
+        movie = {}
+        movie["Title"] = results[0]
+        movie["Genre"] = results[1]
+        movie_data.append(movie)
+    
+    movie_data = movie_data[0]
+    
+    # movie_data['Genre'] = movie_data['Genre'].split("|")
+    print(movie_data['Genre'])
+
+    upcoming_movies = list(recommend_upcoming(movie, movie_data["Genre"]))
+    print(type(upcoming_movies))
+    
     counter = 0
-    for movie in movies:
-        if movie == title:
-            movies.remove(movie)
+    for item in upcoming_movies:
+        if item == movie_data["Title"]:
+            upcoming_movies.remove(movie_data["Title"])
             counter += 1
 
     if counter == 0:
-        del movies[-1]
-    
-    return movies
-
-@app.route("/movie_recommendation/<movie>")
-def movie_recommender(movie):
-    try:
-        movie_recommendation = clean_movies(movie)
-
-    except KeyError:
-        movie_recommendation = []
-
-    return jsonify(movie_recommendation)
-
+        del upcoming_movies[-1]
+        
+    return upcoming_movies
 
 if __name__ == '__main__':
     app.run(debug=True)
