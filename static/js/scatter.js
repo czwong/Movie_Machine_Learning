@@ -3,11 +3,18 @@ var svgWidth = 760;
 var svgHeight = 560;
 
 // Define the chart's margins as an object
+// var chartMargin = {
+//   top: 45,
+//   right: 45,
+//   bottom: 100,
+//   left: 45
+// };
+
 var chartMargin = {
-  top: 45,
-  right: 45,
-  bottom: 100,
-  left: 45
+  top: 60,
+  right: 80,
+  bottom: 60,
+  left: 80
 };
 
 // Define dimensions of the chart area
@@ -60,7 +67,7 @@ d3.json("/gross_data").then(function(response) {
         .attr("cx", d => xScale(d.Actual))
         .attr("cy", d => yScale(d.Predicted))
         .attr("r", 15)
-        .attr("fill", "royalblue")
+        .attr("fill", "red")
         .attr("opacity", ".5");
 
     // Create axes labels
@@ -81,7 +88,7 @@ d3.json("/gross_data").then(function(response) {
     .attr("class", "tooltip")
     .offset([80, -60])
     .html(function(d) {
-    return (`${d.Title}<br>Predicted: $${d.Predicted.toLocaleString()}<br>Actual: $${d.Actual.toLocaleString()}`);
+    return (`${(d.Title).bold()}<br>Predicted: $${d.Predicted.toLocaleString()}<br>Actual: $${d.Actual.toLocaleString()}`);
     });
 
     // Create tooltip in the chart
