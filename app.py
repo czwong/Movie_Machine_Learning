@@ -31,6 +31,7 @@ Base.prepare(db.engine, reflect=True)
 # Save references to each table
 Movies = Base.classes.movie_data
 Images = Base.classes.images
+Predict = Base.classes.predictions
 
 
 @app.route("/")
@@ -38,6 +39,15 @@ def index():
     """Return the homepage."""
     return render_template("index.html")
 
+@app.route("/data_exploration")
+def data_exploration():
+    """Return data exploration page."""
+    return render_template("dataexploration.html")
+
+@app.route("/gross_predictions")
+def gross_predictions():
+    """Return data scatter plot page."""
+    return render_template("scatter.html")
 
 @app.route("/movie_title")
 def movies():
@@ -139,6 +149,21 @@ def movie_recommender(movie):
         movie_recommendation = []
 
     return jsonify(movie_recommendation)
+
+@app.route("/gross_data")
+def alldata():
+    response = db.session.query(Predict.movie_title, Predict.Predicted, Predict.Actual).all()
+
+    g_data = []
+    for result in response:
+        movie = {}
+        movie["Title"] = result[0]
+        movie["Predicted"] = int(result[1])
+        movie["Actual"] = int(result[2])
+        g_data.append(movie)
+
+    # Return a list of the gross earnings data
+    return jsonify(g_data)
 
 
 
