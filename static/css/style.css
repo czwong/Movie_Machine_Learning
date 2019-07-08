@@ -27,7 +27,7 @@ select {
 
 .container-fluid {
   background-attachment: fixed;
-  background-position: bottom center;
+  background-position: fixed;
   background-size: cover;
   background-image: url('../index_images/movies.jpg');
   padding: 0px;

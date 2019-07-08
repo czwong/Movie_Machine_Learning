@@ -40,6 +40,11 @@ def index():
     """Return the homepage."""
     return render_template("index.html")
 
+@app.route("/upcoming_movies")
+def upcoming_movies():
+    """Return data scatter plot page."""
+    return render_template("upcoming.html")
+
 @app.route("/data_exploration")
 def data_exploration():
     """Return data exploration page."""
@@ -173,21 +178,22 @@ def recommend_upcoming(movie_name, genre):
     
     # drop unnecessary column
     df_upcoming = df_upcoming[['name', 'genre']]
+    df_upcoming['genre'] = df_upcoming['genre'].str.strip()
+    df_upcoming['genre'] = df_upcoming['genre'].str.replace(" ","")
+    
 
     # Break up the big genre string into a string array
     df_upcoming['genre'] = df_upcoming['genre'].str.split(',')
     
-
     dict1 = {
-         "name": movie_name['Title'],
+         "name": movie_name["Title"],
          "genre": genre
     }
     
     
     ref_df = pd.DataFrame(dict1, index = [0])
     ref_df['genre'] = ref_df['genre'].str.split('|')
-    # ref_df['genre'] = ref_df['genre'].fillna("").astype('str')
-
+    
     df_upcoming = df_upcoming.append(ref_df, ignore_index=True)
     
 
@@ -196,20 +202,16 @@ def recommend_upcoming(movie_name, genre):
 
     tf = TfidfVectorizer(analyzer='word',ngram_range=(1, 2),min_df=0, stop_words='english')
     tfidf_matrix = tf.fit_transform(df_upcoming['genre'])
-    # print(tfidf_matrix)
     cosine_sim = linear_kernel(tfidf_matrix, tfidf_matrix)
-    # print(cosine_sim)
     
-
     # Build a 1-dimensional array with movie titles
     titles = df_upcoming['name']
     indices = pd.Series(df_upcoming.index, index=df_upcoming['name'])
-    # print(indices)
 
-    idx = indices[movie_name['Title']]
+    idx = indices[movie_name["Title"]]
     sim_scores = list(enumerate(cosine_sim[idx]))
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
-    sim_scores = sim_scores[0:3]
+    sim_scores = sim_scores[0:9]
     movie_indices = [i[0] for i in sim_scores]
 
     recommendations =  titles.iloc[movie_indices]
@@ -218,7 +220,7 @@ def recommend_upcoming(movie_name, genre):
 
 
 @app.route("/upc_movie/<movie>")
-def upc_movie(movie):
+def upcoming_movie(movie):
     sel = [
         Upcoming.name,
         Upcoming.image,
@@ -270,8 +272,7 @@ def get_genre(movie):
         del upcoming_movies[-1]
         
     return jsonify(upcoming_movies)
-
-
+  
 
 if __name__ == '__main__':
     app.run(debug=True)
