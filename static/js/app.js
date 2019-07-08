@@ -84,6 +84,7 @@ function movieRecommender(movie) {
                             .attr('class', 'col-xs-2 col-sm-2 col-md-2')
                             .append('a')
                             .attr('href', '#').attr('class', 'img-zoom-hover').property("value", movie)
+                            .append('img')
                             .attr('src', response[0].Poster_Image);
                     }
 
@@ -164,11 +165,7 @@ function optionChanged(newMovie) {
     var suggested_movies = document.getElementsByClassName("img-zoom-hover");
     for (var i = 0; i < suggested_movies.length; i++) {
         var thisMovie = suggested_movies[i];
-        console.log(thisMovie);
         var value = thisMovie.value;
-        thisMovie.onclick = function () {
-            alert("wow");
-            return false;
-        }
+        thisMovie.addEventListener("click", alert("wow"), false);
     }
 }
