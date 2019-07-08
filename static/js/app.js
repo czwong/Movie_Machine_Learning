@@ -84,8 +84,16 @@ function movieRecommender(movie) {
                             .attr('class', 'col-xs-2 col-sm-2 col-md-2')
                             .append('a')
                             .attr('href', '#').attr('class', 'img-zoom-hover').property("value", movie)
+                            .on("mouseover", function () {
+                                var Nodeselection = d3.select(this);
+                                return Nodeselection._groups[0][0].value;
+                            })
+                            .on("click", function () {
+                                optionChanged(this.value);
+                                d3.select("#dataSet").property('value', this.value);
+                            })
                             .append('img')
-                            .attr('src', response[0].Poster_Image);
+                            .attr('src', response[0].Poster_Image).attr('title', this.text);
                     }
 
                     else {
@@ -95,6 +103,10 @@ function movieRecommender(movie) {
                             .enter()
                             .append('div')
                             .attr('class', 'col-xs-2 col-sm-2 col-md-2')
+                            .on("click", function () {
+                                optionChanged(this.value);
+                                d3.select("#dataSet").property('value', this.value);
+                            })
                             .append('a')
                             .attr('href', '#').attr('class', 'img-zoom-hover').property("value", movie)
                             .append('img')
@@ -118,23 +130,23 @@ function movieRecommender(movie) {
 
 
 function init() {
-  // Grab a reference to the dropdown select element
-  var selector = d3.select("#dataSet");
+    // Grab a reference to the dropdown select element
+    var selector = d3.select("#dataSet");
 
-  // Use the list of movies to populate the select options
-  d3.json("/movie_title").then((movie_list) => {
-    movie_list.forEach((movie) => {
-      selector
-        .append("option")
-        .text(movie)
-        .property("value", movie);
+    // Use the list of movies to populate the select options
+    d3.json("/movie_title").then((movie_list) => {
+        movie_list.forEach((movie) => {
+            selector
+                .append("option")
+                .text(movie)
+                .property("value", movie);
+        });
+
+        // Use the first movie to initialize
+        const firstmovie = movie_list[0][0];
+        moviedata(firstmovie);
+        movieRecommender(firstmovie);
     });
-
-    // Use the first movie to initialize
-    const firstmovie = movie_list[0][0];
-    moviedata(firstmovie);
-    movieRecommender(firstmovie);
-  });
 }
 
 // Initialize the dashboard
@@ -162,10 +174,10 @@ function optionChanged(newMovie) {
     moviedata(newMovie)
     movieRecommender(newMovie)
 
-    var suggested_movies = document.getElementsByClassName("img-zoom-hover");
-    for (var i = 0; i < suggested_movies.length; i++) {
-        var thisMovie = suggested_movies[i];
-        var value = thisMovie.value;
-        thisMovie.addEventListener("click", alert("wow"), false);
-    }
+    //var suggested_movies = document.getElementsByTagName("img");
+    //for (var i = 0; i < suggested_movies.length; i++) {
+    //    var thisMovie = suggested_movies[i];
+    //    var value = thisMovie.value;
+    //    thisMovie.onclick = function () { alert("wow") };
+    //}
 }
