@@ -158,7 +158,7 @@ def movie_recommender(movie):
 @app.route("/upcoming_movie_title")
 def upcoming_movies():
     # movies = db.session.query(Movies.name).order_by(Movies.name.asc()).distinct()
-    upcoming_movies = db.session.query(Upcoming.name).order_by(Movies.name.asc()).distinct()
+    upcoming_movies = db.session.query(Upcoming.name).order_by(Upcoming.name.asc()).distinct()
 
     # Return a list of the column names (team names)
     return jsonify(list(upcoming_movies))
@@ -177,7 +177,7 @@ def upcoming_find(movie):
     #     group_by(Movies.name).\
     #     filter(Movies.name == movie).all()
 
-    table = db.session.query(*sel).filter(Movies.name == movie).all()
+    table = db.session.query(*sel).filter(Upcoming.name == movie).all()
 
     movie_data = []
     for results in table:
@@ -215,12 +215,12 @@ def recommend_upcoming(movie_name, genre):
          "genre": genre
     }
     
-    print(dict1)
+    # print(dict1)
     
     ref_df = pd.DataFrame(dict1, index = [0])
     ref_df['genre'] = ref_df['genre'].str.split('|')
     # ref_df['genre'] = ref_df['genre'].fillna("").astype('str')
-    print(ref_df)
+    # print(ref_df)
     
     
     df_upcoming = df_upcoming.append(ref_df, ignore_index=True)
@@ -253,6 +253,7 @@ def recommend_upcoming(movie_name, genre):
 
     return recommendations
 
+@app.route("/upcoming_movie_recommendation/<movie>")
 def get_genre(movie):
     sel = [
         Movies.name,
