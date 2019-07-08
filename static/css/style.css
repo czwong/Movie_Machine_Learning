@@ -7,7 +7,7 @@
   color: white;
 }
 
-a:hover {
+#tablinks:hover {
   background-color: red;
 }
 
