@@ -2,6 +2,10 @@
     font-weight: bold;
 }
 
+#tablinks:hover {
+    background-color: red;
+}
+
 #genre, #rating {
     font-weight: bold;
 }

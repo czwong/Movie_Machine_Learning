@@ -19,7 +19,7 @@
 <body>
     
     <nav class="navbar navbar-expand-sm" id="don't move" style="background-color: black">
-    <a href="/" class="navbar-brand" style="color: white">
+    <a id="tablinks" href="/" class="navbar-brand" style="color: white">
     Fake IMDB
     </a>
     <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarMenu">
@@ -28,17 +28,17 @@
     <div class="collapse navbar-collapse" id="navbarMenu">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a href="#" class="nav-link" style="color: white">Theaters</a>
+                <a id="tablinks" href="#" class="nav-link" style="color: white">2019 Movie Recommender</a>
             </li>
         </ul>
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a href="/data_exploration" class="nav-link" style="color: white">Data Exploration</a>
+                <a id="tablinks" href="/data_exploration" class="nav-link" style="color: white">Data Exploration</a>
             </li>
         </ul>
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a href="/gross_predictions" class="nav-link" style="color: white">Gross Predictions</a>
+                <a id="tablinks" href="/gross_predictions" class="nav-link" style="color: white">Gross Predictions</a>
             </li>
         </ul>
     </div>
@@ -69,7 +69,7 @@
         <div class="text_cell_render border-box-sizing rendered_html">
         <ul>
         <li>The average gross for a movie is around 51.8 million dollars</li>
-        <li>The average movie budget is around 45.5 million dollars, which is around the average gross</li>
+        <li>The average movie budget is around 45.5 million dollars</li>
         <li>The average IMDB score is around 6.5</li>
         <li>The average movie duration is around 110 minutes</li>
         <li>The facebook like attributes range from 0 to hundreds of thousands<ul>
@@ -92,7 +92,8 @@
 
 
         <div class="output_subarea output_stream output_stdout output_text">
-        <pre>       num_critic_for_reviews  director_facebook_likes  \
+        <pre>       
+                num_critic_for_reviews  director_facebook_likes  \
         count             3833.000000              3833.000000   
         mean               165.060527               792.062875   
         std                123.887974              3039.089965   
@@ -103,7 +104,7 @@
         max                813.000000             23000.000000   
         
 
-            actor_3_facebook_likes  actor_1_facebook_likes         gross  \
+               actor_3_facebook_likes  actor_1_facebook_likes         gross  \
         count             3833.000000             3833.000000  3.833000e+03   
         mean               761.572137             7661.528829  5.179177e+07   
         std               1876.769004            15436.636753  7.005837e+07   
@@ -114,7 +115,7 @@
         max              23000.000000           640000.000000  7.605058e+08   
 
 
-            num_voted_users  cast_total_facebook_likes  num_user_for_reviews  \
+               num_voted_users  cast_total_facebook_likes  num_user_for_reviews  \
         count     3.833000e+03                3833.000000           3833.000000   
         mean      1.039955e+05               11391.589356            331.319854   
         std       1.513952e+05               19008.745831            409.539534   
@@ -125,7 +126,7 @@
         max       1.689764e+06              656730.000000           5060.000000   
 
 
-                    budget  actor_2_facebook_likes  movie_facebook_likes  \
+                     budget  actor_2_facebook_likes  movie_facebook_likes  \
         count  3.833000e+03             3833.000000           3833.000000   
         mean   4.551206e+07             1992.883642           9261.203496   
         std    2.238163e+08             4509.216484          21435.130791   
@@ -136,7 +137,7 @@
         max    1.221550e+10           137000.000000         349000.000000   
 
 
-            imdb_score     duration  
+                imdb_score     duration  
         count  3833.000000  3833.000000  
         mean      6.459144   110.021915  
         std       1.057220    22.581332  
@@ -448,7 +449,7 @@
         </div><div class="inner_cell">
         <div class="text_cell_render border-box-sizing rendered_html">
         <h3 id="Distribution-of-the-IMDB-Score,-Duration,-and-Number-of-Critics-in-the-Reviews">Distribution of the IMDB Score, Duration, and Number of Critics in the Reviews</h3>
-        <li>The number of critics in the reviews seems to have the largest amount of outliers compared to the other two</li>
+        <li>The number of critics in the reviews seem to have the largest amount of outliers compared to the other two</li>
         </ul>
 
         </div>
