@@ -51,7 +51,6 @@ def gross_predictions():
 
 @app.route("/movie_title")
 def movies():
-    # movies = db.session.query(Movies.name).order_by(Movies.name.asc()).distinct()
     movies = db.session.query(Movies.name).filter(Movies.name == Images.name).order_by(Movies.name.asc()).distinct()
 
     # Return a list of the column names (team names)
@@ -69,10 +68,6 @@ def find(movie):
         Movies.total_votes,
         Images.image
     ]
-
-    # table = db.session.query(*sel).join(Movies, Movies.name == Images.name).\
-    #     group_by(Movies.name).\
-    #     filter(Movies.name == movie).all()
 
     table = db.session.query(*sel).join(Movies, Movies.name == Images.name).\
         filter(Movies.name == movie).all()
@@ -98,9 +93,7 @@ from sklearn.metrics.pairwise import linear_kernel
 
 cnx = sqlite3.connect('db/newfinaldata.sqlite')
 df_movie = pd.read_sql_query("SELECT * FROM movie_data", cnx)
-# df_movie = df_movie.drop_duplicates(subset="name")
 df_img = pd.read_sql_query("SELECT * FROM images", cnx)
-# df_img = df_img.drop_duplicates(subset="name")
 df = pd.merge(df_movie, df_img, how="inner", on='name')
 
 # Break up the big genre string into a string array

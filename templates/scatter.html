@@ -51,26 +51,70 @@
   <div class="container">
     <div class="row">
       <div class="col-xs-12 col-md-12">
-        <h1>Predicted Gross vs. Actual Gross</h1>
+        <h1>Gross Predictions Using RandomForestRegressor Model</h1>
+        <h2>Predicted Gross vs. Actual Gross</h2>
       </div>
     </div>
-    <div class="row">
-      <div class="col-12  col-xs-9">
-        <div id="scatter">
-          <!-- We append our chart here. -->
+    <div class="container-fluid">
+      <div class="row">
+          <div class="col-md-9  col-xs-9">
+            <div id="scatter">
+              <!-- We append our chart here. -->
+            </div>
+          </div>
+    
+          <div class="col-md-2  col-xs-9">
+            <div>
+                <h3>Quantifying the Test Data:</h3>
+            </div>
+          </div>
         </div>
-      </div>
     </div>
+    <br>
+    <br>
     <div class="row">
       <div class="col-md-6">
-        <img class="variables">
+        <h3>Features Used to Train the Model</h3>
+        <p><div id="feat" style="font-weight: bold">num_voted_users:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">budget:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">num_user_for_reviews:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">cast_total_facebook_likes:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">duration:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">movie_facebook_likes:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">num_critic_for_reviews:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">imdb_score:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">content_rating_R:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">Family:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">content_rating_PG:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">Adventure:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">Sci-Fi:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">Action:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">Comedy:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">Fantasy:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">Drama:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">Animation:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">Musical:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">Thriller:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">Romance:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">content_rating_PG_13:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">War:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">Crime:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">content_rating_G:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">History:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">Biography:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">Western:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">Mystery:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">Horror:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">Sport:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">Music:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">Documentary:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">content_rating_NC-17:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">content_rating_X:</div> The number of IMDB users that voted.</p>
       </div>
       <div class="col-md-6">
-        xy
+        {insert screenshot here}
       </div>
     </div>
-
-
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.9.1/d3-tip.js"></script>
