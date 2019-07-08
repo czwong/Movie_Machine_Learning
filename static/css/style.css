@@ -7,6 +7,10 @@
   color: white;
 }
 
+a:hover {
+  background-color: red;
+}
+
 .filters {
   margin: 10px;
   display: block;
