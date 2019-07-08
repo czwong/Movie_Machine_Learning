@@ -12,12 +12,17 @@ from sqlalchemy import or_
 from flask import Flask, jsonify, render_template
 from flask_sqlalchemy import SQLAlchemy
 
+from datetime import timedelta
+
 app = Flask(__name__)
 
 
 #################################################
 # Database Setup
 #################################################
+
+# clean cache 
+app.config['SEND_FILE_MAX_AG_DEFAULT'] = timedelta(seconds = 1)
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db/newfinaldata.sqlite"
 db = SQLAlchemy(app)
@@ -177,7 +182,7 @@ def upcoming_find(movie):
     #     group_by(Movies.name).\
     #     filter(Movies.name == movie).all()
 
-    table = db.session.query(*sel).filter(Upcoming.name == movie).all()
+    table = db.session.query(*sel).filter(Upcoming.name == upcoming_movies[0]).all()
 
     movie_data = []
     for results in table:
@@ -260,8 +265,8 @@ def get_genre(movie):
         Movies.genre
     ]
 
-    table = session.query(*sel).filter(Movies.name == movie).all()
-    print(table)
+    table = db.session.query(*sel).filter(Movies.name == movie).all()
+    # print(table)
 
     movie_data = []
     for results in table:
@@ -270,18 +275,18 @@ def get_genre(movie):
         movie["Genre"] = results[1]
         movie_data.append(movie)
     
-    movie_data = movie_data[0]
+    data = movie_data[0]
     
     # movie_data['Genre'] = movie_data['Genre'].split("|")
-    print(movie_data['Genre'])
+    # print(movie_data['Genre'])
 
-    upcoming_movies = list(recommend_upcoming(movie, movie_data["Genre"]))
-    print(type(upcoming_movies))
+    upcoming_movies = list(recommend_upcoming(movie, data["Genre"]))
+    # print(type(upcoming_movies))
     
     counter = 0
     for item in upcoming_movies:
-        if item == movie_data["Title"]:
-            upcoming_movies.remove(movie_data["Title"])
+        if item == data["Title"]:
+            upcoming_movies.remove(data["Title"])
             counter += 1
 
     if counter == 0:

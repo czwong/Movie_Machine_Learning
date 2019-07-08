@@ -1,4 +1,4 @@
-function upcoming_moviedata(movie) {
+function moviedata(movie) {
     var url = "/upcoming_movies/" + `${movie}`;
 
     // Use d3 to select the div panel with class of `#jumbotron`
@@ -35,7 +35,7 @@ function upcoming_moviedata(movie) {
             // movie_data.append('div').attr('class', 'rating').text('IMDB Rating: ').append('p').text(response[0].Rating)
             // movie_data.append('div').attr('class', 'duration').text('Duration: ').append('p').text(response[0].Duration + ' minutes')
             // movie_data.append('div').attr('class', 'gross_earning').text('Gross Earnings: ').append('p').text('$' + parseInt(response[0].Gross_Earning).toLocaleString())
-            movie_data.append('div').attr('class', 'release_date').text('Release_date: ').append('p').text(response[0].Release_data)
+            movie_data.append('div').attr('class', 'release_date').text('Release_date: ').append('p').text(response[0].Release_date)
             movie_data.append('div').attr('class', 'genre').text('Genre: ').append('p').text(response[0].Genre)
             // movie_data.append('div').attr('class', 'total_votes').text('Total Votes: ').append('p').text(parseInt(response[0].Total_Votes). toLocaleString())
 
@@ -124,7 +124,7 @@ function init() {
   var selector = d3.select("#dataSet");
 
   // Use the list of movies to populate the select options
-  d3.json("/upcoming_movie_title").then((movie_list) => {
+  d3.json("/movie_title").then((movie_list) => {
     movie_list.forEach((movie) => {
       selector
         .append("option")
