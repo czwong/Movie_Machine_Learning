@@ -173,11 +173,4 @@ function optionChanged(newMovie) {
     // Fetch new data each time a new movie is selected
     moviedata(newMovie)
     movieRecommender(newMovie)
-
-    //var suggested_movies = document.getElementsByTagName("img");
-    //for (var i = 0; i < suggested_movies.length; i++) {
-    //    var thisMovie = suggested_movies[i];
-    //    var value = thisMovie.value;
-    //    thisMovie.onclick = function () { alert("wow") };
-    //}
 }
