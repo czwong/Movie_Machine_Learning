@@ -32,6 +32,7 @@ Base.prepare(db.engine, reflect=True)
 Movies = Base.classes.movie_data
 Images = Base.classes.images
 Predict = Base.classes.predictions
+Upcoming = Base.classes.upcoming
 
 
 @app.route("/")
@@ -157,6 +158,118 @@ def alldata():
 
     # Return a list of the gross earnings data
     return jsonify(g_data)
+
+
+
+#=================================
+#Upcoming Movies
+#=================================
+
+
+def recommend_upcoming(movie_name, genre):
+
+    cnx = sqlite3.connect('db/newfinaldata.sqlite')
+    df_upcoming = pd.read_sql_query("SELECT * FROM upcoming", cnx)
+    
+    # drop unnecessary column
+    df_upcoming = df_upcoming[['name', 'genre']]
+
+    # Break up the big genre string into a string array
+    df_upcoming['genre'] = df_upcoming['genre'].str.split(',')
+    
+
+    dict1 = {
+         "name": movie_name['Title'],
+         "genre": genre
+    }
+    
+    
+    ref_df = pd.DataFrame(dict1, index = [0])
+    ref_df['genre'] = ref_df['genre'].str.split('|')
+    # ref_df['genre'] = ref_df['genre'].fillna("").astype('str')
+
+    df_upcoming = df_upcoming.append(ref_df, ignore_index=True)
+    
+
+    # Convert genres to string value
+    df_upcoming['genre'] = df_upcoming['genre'].fillna("").astype('str')
+
+    tf = TfidfVectorizer(analyzer='word',ngram_range=(1, 2),min_df=0, stop_words='english')
+    tfidf_matrix = tf.fit_transform(df_upcoming['genre'])
+    # print(tfidf_matrix)
+    cosine_sim = linear_kernel(tfidf_matrix, tfidf_matrix)
+    # print(cosine_sim)
+    
+
+    # Build a 1-dimensional array with movie titles
+    titles = df_upcoming['name']
+    indices = pd.Series(df_upcoming.index, index=df_upcoming['name'])
+    # print(indices)
+
+    idx = indices[movie_name['Title']]
+    sim_scores = list(enumerate(cosine_sim[idx]))
+    sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
+    sim_scores = sim_scores[0:3]
+    movie_indices = [i[0] for i in sim_scores]
+
+    recommendations =  titles.iloc[movie_indices]
+
+    return recommendations
+
+
+@app.route("/upc_movie/<movie>")
+def upc_movie(movie):
+    sel = [
+        Upcoming.name,
+        Upcoming.image,
+        Upcoming.release_date,
+        Upcoming.genre
+    ]
+
+    table = db.session.query(*sel).filter(Upcoming.name == movie).all()
+
+    movie_data = []
+    for results in table:
+        movie = {}
+        movie["Title"] = results[0]
+        movie["Poster_Image"] = results[1]
+        movie["Release_Date"] = results[2]
+        movie["Genre"] = results[3].replace("|", ", ")
+        movie_data.append(movie)
+
+    return jsonify(movie_data)
+
+
+@app.route("/upcoming_movie_recommendation/<movie>")
+def get_genre(movie):
+    sel = [
+        Movies.name,
+        Movies.genre
+    ]
+
+    table = db.session.query(*sel).filter(Movies.name == movie).all()
+
+    movie_data = []
+    for results in table:
+        movie = {}
+        movie["Title"] = results[0]
+        movie["Genre"] = results[1]
+        movie_data.append(movie)
+    
+    data = movie_data[0]
+
+    upcoming_movies = list(recommend_upcoming(movie, data["Genre"]))
+    
+    counter = 0
+    for item in upcoming_movies:
+        if item == data["Title"]:
+            upcoming_movies.remove(data["Title"])
+            counter += 1
+
+    if counter == 0:
+        del upcoming_movies[-1]
+        
+    return jsonify(upcoming_movies)
 
 
 
