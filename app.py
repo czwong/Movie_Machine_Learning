@@ -172,8 +172,6 @@ def alldata():
 
 
 def recommend_upcoming(movie_name, genre):
-
-    cnx = sqlite3.connect('db/newfinaldata.sqlite')
     df_upcoming = pd.read_sql_query("SELECT * FROM upcoming", cnx)
     
     # drop unnecessary column
