@@ -212,7 +212,7 @@ def recommend_upcoming(movie_name, genre):
     idx = indices[newtitle]
     sim_scores = list(enumerate(cosine_sim[idx]))
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
-    sim_scores = sim_scores[0:9]
+    sim_scores = sim_scores[0:4]
     movie_indices = [i[0] for i in sim_scores]
 
     recommendations =  titles.iloc[movie_indices]
@@ -237,7 +237,7 @@ def upcoming_movie(movie):
         movie["Title"] = results[0]
         movie["Poster_Image"] = results[1]
         movie["Release_Date"] = results[2]
-        movie["Genre"] = results[3].replace("|", ", ")
+        movie["Genre"] = results[3].strip()
         movie_data.append(movie)
 
     return jsonify(movie_data)
