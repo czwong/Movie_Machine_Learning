@@ -184,7 +184,7 @@ def recommend_upcoming(movie_name, genre):
     df_upcoming['genre'] = df_upcoming['genre'].str.split(',')
     
     dict1 = {
-         "name": movie_name["Title"],
+         "name": movie_name,
          "genre": genre
     }
     
@@ -206,10 +206,11 @@ def recommend_upcoming(movie_name, genre):
     titles = df_upcoming['name']
     indices = pd.Series(df_upcoming.index, index=df_upcoming['name'])
 
-    idx = indices[movie_name["Title"]]
+    newtitle = movie_name
+    idx = indices[newtitle]
     sim_scores = list(enumerate(cosine_sim[idx]))
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
-    sim_scores = sim_scores[0:9]
+    sim_scores = sim_scores[0:4]
     movie_indices = [i[0] for i in sim_scores]
 
     recommendations =  titles.iloc[movie_indices]
@@ -234,7 +235,7 @@ def upcoming_movie(movie):
         movie["Title"] = results[0]
         movie["Poster_Image"] = results[1]
         movie["Release_Date"] = results[2]
-        movie["Genre"] = results[3].replace("|", ", ")
+        movie["Genre"] = results[3].strip()
         movie_data.append(movie)
 
     return jsonify(movie_data)
@@ -251,10 +252,10 @@ def get_genre(movie):
 
     movie_data = []
     for results in table:
-        movie = {}
-        movie["Title"] = results[0]
-        movie["Genre"] = results[1]
-        movie_data.append(movie)
+        movie_dict = {}
+        movie_dict["Title"] = results[0]
+        movie_dict["Genre"] = results[1]
+        movie_data.append(movie_dict)
     
     data = movie_data[0]
 
@@ -262,8 +263,8 @@ def get_genre(movie):
     
     counter = 0
     for item in upcoming_movies:
-        if item == data["Title"]:
-            upcoming_movies.remove(data["Title"])
+        if item == movie:
+            upcoming_movies.remove(item)
             counter += 1
 
     if counter == 0:
