@@ -160,17 +160,29 @@ def movie_recommender(movie):
 # upcoming movies set up
 #################################################
 
-@app.route("/upcoming_movie_title")
-def upcoming_movies():
-    # movies = db.session.query(Movies.name).order_by(Movies.name.asc()).distinct()
-    upcoming_movies = db.session.query(Upcoming.name).order_by(Upcoming.name.asc()).distinct()
-
-    # Return a list of the column names (team names)
-    return jsonify(list(upcoming_movies))
-
-
 @app.route("/upcoming_movies/<movie>")
-def upcoming_find(movie):
+def upcoming_movies(movie):
+    # movies = db.session.query(Movies.name).order_by(Movies.name.asc()).distinct()
+    # upcoming_movies = db.session.query(Upcoming.name).order_by(Upcoming.name.asc()).distinct()
+
+    sel = [
+        Upcoming.image
+    ]
+
+    table = db.session.query(*sel).filter(Upcoming.name == movie).all()
+
+    movie_data_1 = []
+    for results in table:
+        movies = {}
+        movies["Poster_Image"] = results[0]
+        movie_data_1.append(movies)
+
+    return jsonify(movie_data_1)
+
+
+
+@app.route("/recommend_upcoming_movies/<movie>")
+def recommend_upcoming_find(movie):
     sel = [
         Upcoming.name,
         Upcoming.release_date,
@@ -182,16 +194,16 @@ def upcoming_find(movie):
     #     group_by(Movies.name).\
     #     filter(Movies.name == movie).all()
 
-    table = db.session.query(*sel).filter(Upcoming.name == upcoming_movies[0]).all()
+    table = db.session.query(*sel).filter(Upcoming.name == get_genre(movie)[0]).all()
 
     movie_data = []
     for results in table:
-        movie = {}
-        movie["Title"] = results[0]
-        movie["Release_date"] = results[1]
-        movie["Genre"] = results[2]
-        movie["Poster_Image"] = results[3]
-        movie_data.append(movie)
+        movies = {}
+        movies["Title"] = results[0]
+        movies["Release_date"] = results[1]
+        movies["Genre"] = results[2]
+        movies["Poster_Image"] = results[3]
+        movie_data.append(movies)
 
     return jsonify(movie_data)
 

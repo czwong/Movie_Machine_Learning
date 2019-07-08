@@ -1,5 +1,5 @@
 function moviedata(movie) {
-    var url = "/upcoming_movies/" + `${movie}`;
+    var url = "/recommend_upcoming_movies/" + `${movie}`;
 
     // Use d3 to select the div panel with class of `#jumbotron`
     var movie_data_title = d3.select("body > div > div:nth-child(1) > div.col-lg-8 > div > div:nth-child(1) > div");
@@ -35,7 +35,7 @@ function moviedata(movie) {
             // movie_data.append('div').attr('class', 'rating').text('IMDB Rating: ').append('p').text(response[0].Rating)
             // movie_data.append('div').attr('class', 'duration').text('Duration: ').append('p').text(response[0].Duration + ' minutes')
             // movie_data.append('div').attr('class', 'gross_earning').text('Gross Earnings: ').append('p').text('$' + parseInt(response[0].Gross_Earning).toLocaleString())
-            movie_data.append('div').attr('class', 'release_date').text('Release_date: ').append('p').text(response[0].Release_date)
+            movie_data.append('div').attr('class', 'release_date').append('p').text(response[0].Release_date)
             movie_data.append('div').attr('class', 'genre').text('Genre: ').append('p').text(response[0].Genre)
             // movie_data.append('div').attr('class', 'total_votes').text('Total Votes: ').append('p').text(parseInt(response[0].Total_Votes). toLocaleString())
 
