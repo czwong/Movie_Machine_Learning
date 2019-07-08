@@ -62,7 +62,7 @@ function movieRecommender(movie) {
     var carousel_group = [carousel_1, carousel_2, carousel_3];
     let carousel_count = 0;
 
-    //movie_recommend_row.classed('d-none', true)
+    movie_recommend_row.classed('d-none', false)
 
     d3.json(movieList_url).then(function (movieList) {
         carousel_1.html("");
@@ -84,17 +84,28 @@ function movieRecommender(movie) {
                             .attr('class', 'col-xs-2 col-sm-2 col-md-2')
                             .append('a')
                             .attr('href', '#').attr('class', 'img-zoom-hover').property("value", movie)
-                            .on("mouseover", function () {
-                                var Nodeselection = d3.select(this);
-                                return Nodeselection._groups[0][0].value;
-                            })
+                            //.on("mouseover", function () {
+                            //    var Nodeselection = d3.select(this);
+                            //    Nodeselection.html(Nodeselection._groups[0][0].value)
+                            //        .style("left", (d3.event.pageX) + "px")
+                            //        .style("top", (d3.event.pageY) + "px");
+                            //    Nodeselection.transition()
+                            //        .duration(200)
+                            //        .style("opacity", 0.9);
+                            //})
+                            //.on("mouseout", function () {
+                            //    var Nodeselection = d3.select(this);
+                            //    Nodeselection.transition()
+                            //        .duration(500)
+                            //        .style("opacity", 0);
+                            //})
                             .on("click", function () {
                                 optionChanged(this.value);
                                 d3.select("#dataSet").property('value', this.value);
                             })
                             .append('img')
                             .attr('src', response[0].Poster_Image).attr('title', this.text);
-                    }
+                    }   
 
                     else {
                         carousel_count++;
@@ -173,11 +184,4 @@ function optionChanged(newMovie) {
     // Fetch new data each time a new movie is selected
     moviedata(newMovie)
     movieRecommender(newMovie)
-
-    //var suggested_movies = document.getElementsByTagName("img");
-    //for (var i = 0; i < suggested_movies.length; i++) {
-    //    var thisMovie = suggested_movies[i];
-    //    var value = thisMovie.value;
-    //    thisMovie.onclick = function () { alert("wow") };
-    //}
 }

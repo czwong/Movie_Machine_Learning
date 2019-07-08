@@ -59,7 +59,7 @@ d3.json("/gross_data").then(function(response) {
         .attr("class", "circle")
         .attr("cx", d => xScale(d.Actual))
         .attr("cy", d => yScale(d.Predicted))
-        .attr("r", 15)
+        .attr("r", 12)
         .attr("fill", "red")
         .attr("opacity", ".5");
 
@@ -79,7 +79,7 @@ d3.json("/gross_data").then(function(response) {
 
     var toolTip = d3.tip()
     .attr("class", "tooltip")
-    .offset([80, -60])
+    .offset([95, -40])
     .html(function(d) {
     return (`${(d.Title).bold()}<br>Predicted: $${d.Predicted.toLocaleString()}<br>Actual: $${d.Actual.toLocaleString()}`);
     });
@@ -90,11 +90,28 @@ d3.json("/gross_data").then(function(response) {
     // Step 8: Create event listeners to display and hide the tooltip
     circlesGroup.on("mouseover", function(data) {
         toolTip.show(data, this);
+        d3.select(this)
+          .transition()
+          .duration(200)
+          .attr("r", 18)
+          .attr("opacity", "1")
+          .attr("fill", "black");
     })
         // onmouseout event
         .on("mouseout", function(data, index) {
         toolTip.hide(data);
+        d3.select(this)
+          .transition()
+          .duration(200)
+          .attr("r", 12)
+          .attr("fill", "red")
+          .attr("opacity", "0.5");
+        
         });
+
+
+
+  
     
 });
 
