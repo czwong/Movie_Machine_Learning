@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>D3Times</title>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <!-- <link rel="stylesheet" href="assets/css/d3Style.css"> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.9.2/d3.min.js"></script>
+
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-sm" id="don't move" style="background-color: black">
+    <a href="/" class="navbar-brand" style="color: white">
+      Fake IMDB
+    </a>
+    <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarMenu">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a href="#" class="nav-link" style="color: white">Theaters</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a href="/data_exploration" class="nav-link" style="color: white">Data Exploration</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a href="/gross_predictions" class="nav-link" style="color: white">Gross Predictions</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-md-12">
+        <h1>Gross Predictions Using RandomForestRegressor Model</h1>
+        <h2>Predicted Gross vs. Actual Gross</h2>
+      </div>
+    </div>
+    <div class="container-fluid">
+      <div class="row">
+          <div class="col-md-9  col-xs-9">
+            <div id="scatter">
+              <!-- We append our chart here. -->
+            </div>
+          </div>
+    
+          <div class="col-md-2  col-xs-9">
+            <div>
+                <h3>Quantifying the Test Data:</h3>
+            </div>
+          </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="row">
+      <div class="col-md-6">
+        <h3>Features Used to Train the Model</h3>
+        <p><div id="feat" style="font-weight: bold">num_voted_users:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">budget:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">num_user_for_reviews:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">cast_total_facebook_likes:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">duration:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">movie_facebook_likes:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">num_critic_for_reviews:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">imdb_score:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">content_rating_R:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">Family:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">content_rating_PG:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">Adventure:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">Sci-Fi:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">Action:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">Comedy:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">Fantasy:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">Drama:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">Animation:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">Musical:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">Thriller:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">Romance:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">content_rating_PG_13:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">War:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">Crime:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">content_rating_G:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">History:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">Biography:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">Western:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">Mystery:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">Horror:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">Sport:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">Music:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">Documentary:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">content_rating_NC-17:</div> The number of IMDB users that voted.</p>
+        <p><div id="feat" style="font-weight: bold">content_rating_X:</div> The number of IMDB users that voted.</p>
+      </div>
+      <div class="col-md-6">
+        {insert screenshot here}
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.9.1/d3-tip.js"></script>
+  <script src="{{ url_for('static', filename='js/scatter.js') }}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.9.1/d3-tip.js"></script>
+
+</body>
+
+</html>
