@@ -80,7 +80,7 @@ function movieRecommender(movie) {
             
                 counter++;
             
-                // movie_1.append('div').attr('class', 'title').text('Title: ').append('p').text(response[0].Title)
+                movie_1.append('div').attr('class', 'title').text('Title: ').append('p').text(response[0].Title)
                 // movie_1.append('div').attr('class', 'genre').text('Genre: ').append('p').text(response[0].Genre)
                 // movie_1.append('div').attr('class', 'release_date').text('Release Date: ').append('p').text((response[0].Release_Date))
                 // movie_2.append('div').attr('class', 'title').text('Title: ').append('p').text(response[0].Title)
