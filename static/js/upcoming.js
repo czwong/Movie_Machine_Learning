@@ -54,111 +54,35 @@ function moviedata(movie) {
 function movieRecommender(movie) {
     var movieList_url = "/upcoming_movie_recommendation/" + `${movie}`;
 
-    var carousel_1 = d3.select("#demo > div > div:nth-child(1)");
-    var carousel_2 = d3.select("#demo > div > div:nth-child(2)");
-    var carousel_3 = d3.select("#demo > div > div:nth-child(3)");
+    var movie_1 = d3.select("body > div > div:nth-child(4) > div:nth-child(1)");
+    var movie_2 = d3.select("body > div > div:nth-child(4) > div:nth-child(2)");
+    var movie_3 = d3.select("body > div > div:nth-child(4) > div:nth-child(3)");
 
-    // var upc_data_img = d3.select("#movie_data_body_2");
-    // var upc_data = d3.select("#movie_data_body_2 > div:nth-child(2)");
-    // upc_data.html("")
-    // upc_data_img.html("")
-
-    //movie_recommend_row.classed('d-none', true)
-
-    var carousel_group = [carousel_1, carousel_2, carousel_3];
-    let carousel_count = 0;
-
-    var upc = d3.select("#upcoming")
+    var upc_movies = [movie_1, movie_2, movie_3];
+    let counter = 0;
 
     d3.json(movieList_url).then(function (movieList) {
-        // // carousel_1.html("");
-        // upc_data.html("")
-        // upc_data_img.html("")
-        carousel_1.html("");
-        carousel_2.html("");
-        carousel_3.html("");
+        movie_1.html("");
+        movie_2.html("");
+        movie_3.html("");
 
-        upc.html("");
+        movieList.forEach(searchMovie);
 
-        try {
-            movieList.forEach(searchMovie);
+        function searchMovie(movie) {
+            var movie_url = "/upc_movie/" + `${movie}`;
 
-            function searchMovie(movie) {
-                var movie_url = "/upc_movie/" + `${movie}`;
+            d3.json(movie_url).then(function (response) {
+                upc_movies[counter].selectAll("img")
+                    .data(response)
+                    .enter()
+                    .append('img')
+                    .attr('src', response[0].Poster_Image);
 
-                d3.json(movie_url).then(function (response) {
-
-                    upc.selectAll('img')
-                        .data(response)
-                        .enter()
-                        .append('div')
-                        .attr('class', 'col-4')
-                        .append('img')
-                        .attr('src', response[0].Poster_Image)
-                        .attr('height', 'auto')
-                        .attr('width', 'auto');
-                        // .append('div').attr('class', 'genre').text('Title: ').append('p').text(response[0].Title)
-                        // .append('div').attr('class', 'genre').append('p').text(response[0].Release_Date)
-                        // .append('div').attr('class', 'genre').text('Genre: ').append('p').text(response[0].Genre);
-
-                    upc[carousel_count].append('div').attr('class', 'genre').text('Title: ').append('p').text(response[0].Title);
-                    upc[carousel_count].append('div').attr('class', 'genre').append('p').text(response[0].Release_Date);
-                    upc[carousel_count].append('div').attr('class', 'genre').text('Genre: ').append('p').text(response[0].Genre);
-
-                    carousel_count ++;
-
-                    // if (carousel_group[carousel_count]._groups[0][0].childElementCount < 4) {
-                    //     carousel_group[carousel_count].selectAll('div.carousel-item')
-                    //         .data(response)
-                    //         .enter()
-                    //         .append('div')
-                    //         .attr('class', 'col-xs-2 col-sm-2 col-md-2')
-                    //         .append('a')
-                    //         .attr('href', '#').attr('class', 'img-zoom-hover').property("value", movie)
-                    //         .on("mouseover", function () {
-                    //             var Nodeselection = d3.select(this);
-                    //             return Nodeselection._groups[0][0].value;
-                    //         })
-                    //         .on("click", function () {
-                    //             optionChanged(this.value);
-                    //             d3.select("#dataSet").property('value', this.value);
-                    //         })
-                    //         .append('img')
-                    //         .attr('src', response[0].Poster_Image).attr('title', this.text);
-                    // }
-
-                    // else {
-                    //     carousel_count++;
-                    //     carousel_group[carousel_count].selectAll('div.carousel-item')
-                    //         .data(response)
-                    //         .enter()
-                    //         .append('div')
-                    //         .attr('class', 'col-xs-2 col-sm-2 col-md-2')
-                    //         .on("click", function () {
-                    //             optionChanged(this.value);
-                    //             d3.select("#dataSet").property('value', this.value);
-                    //         })
-                    //         .append('a')
-                    //         .attr('href', '#').attr('class', 'img-zoom-hover').property("value", movie)
-                    //         .append('img')
-                    //         .attr('src', response[0].Poster_Image);
-                    // }
-                });
-            }
-        }
-
-        catch (err) {
-            var message = d3.select("body > div > div:nth-child(1) > div.col-lg-8 > div > div:nth-child(1) > div");
-            message.html("");
-            message.append("h1")
-                .attr("class", "nothing_found")
-                .text("No results found for " + movie);
-
-            movie_recommend_row.classed('d-none', true);
+                counter++;
+            });
         }
     });
 }
-
 
 function init() {
     // Grab a reference to the dropdown select element
@@ -204,11 +128,4 @@ function optionChanged(newMovie) {
     // Fetch new data each time a new movie is selected
     moviedata(newMovie)
     movieRecommender(newMovie)
-
-    //var suggested_movies = document.getElementsByTagName("img");
-    //for (var i = 0; i < suggested_movies.length; i++) {
-    //    var thisMovie = suggested_movies[i];
-    //    var value = thisMovie.value;
-    //    thisMovie.onclick = function () { alert("wow") };
-    //}
 }
