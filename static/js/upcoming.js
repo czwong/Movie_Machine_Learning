@@ -68,6 +68,8 @@ function movieRecommender(movie) {
     var carousel_group = [carousel_1, carousel_2, carousel_3];
     let carousel_count = 0;
 
+    var upc = d3.select("#upcoming")
+
     d3.json(movieList_url).then(function (movieList) {
         // // carousel_1.html("");
         // upc_data.html("")
@@ -75,6 +77,8 @@ function movieRecommender(movie) {
         carousel_1.html("");
         carousel_2.html("");
         carousel_3.html("");
+
+        upc.html("");
 
         try {
             movieList.forEach(searchMovie);
@@ -84,11 +88,11 @@ function movieRecommender(movie) {
 
                 d3.json(movie_url).then(function (response) {
 
-                    carousel_group[carousel_count].selectAll('img')
+                    upc.selectAll('img')
                         .data(response)
                         .enter()
                         .append('div')
-                        .attr('class', 'col-6')
+                        .attr('class', 'col-4')
                         .append('img')
                         .attr('src', response[0].Poster_Image)
                         .attr('height', 'auto')
@@ -97,9 +101,9 @@ function movieRecommender(movie) {
                         // .append('div').attr('class', 'genre').append('p').text(response[0].Release_Date)
                         // .append('div').attr('class', 'genre').text('Genre: ').append('p').text(response[0].Genre);
 
-                    carousel_group[carousel_count].append('div').attr('class', 'genre').text('Title: ').append('p').text(response[0].Title);
-                    carousel_group[carousel_count].append('div').attr('class', 'genre').append('p').text(response[0].Release_Date);
-                    carousel_group[carousel_count].append('div').attr('class', 'genre').text('Genre: ').append('p').text(response[0].Genre);
+                    upc[carousel_count].append('div').attr('class', 'genre').text('Title: ').append('p').text(response[0].Title);
+                    upc[carousel_count].append('div').attr('class', 'genre').append('p').text(response[0].Release_Date);
+                    upc[carousel_count].append('div').attr('class', 'genre').text('Genre: ').append('p').text(response[0].Genre);
 
                     carousel_count ++;
 

@@ -7,7 +7,7 @@ var chartMargin = {
   top: 60,
   right: 80,
   bottom: 60,
-  left: 80
+  left: 100
 };
 
 // Define dimensions of the chart area
@@ -35,11 +35,11 @@ d3.json("/gross_data").then(function(response) {
     })
 
     var xScale = d3.scaleLinear()
-        .domain([1000000, d3.max(response, d => d.Actual)])
+        .domain([10000, d3.max(response, d => d.Actual)])
         .range([0, chartWidth]);
 
     var yScale = d3.scaleLinear()
-        .domain([0, d3.max(response, d => d.Predicted)])
+        .domain([10000, d3.max(response, d => d.Predicted)])
         .range([chartHeight, 0]);
 
     var bottomAxis = d3.axisBottom(xScale);
@@ -108,9 +108,6 @@ d3.json("/gross_data").then(function(response) {
           .attr("opacity", "0.5");
         
         });
-
-
-
   
     
 });
