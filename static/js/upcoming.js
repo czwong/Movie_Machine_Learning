@@ -54,9 +54,13 @@ function moviedata(movie) {
 function movieRecommender(movie) {
     var movieList_url = "/upcoming_movie_recommendation/" + `${movie}`;
 
-    var movie_1 = d3.select("body > div > div:nth-child(4) > div:nth-child(1)");
-    var movie_2 = d3.select("body > div > div:nth-child(4) > div:nth-child(2)");
-    var movie_3 = d3.select("body > div > div:nth-child(4) > div:nth-child(3)");
+    var movie_1 = d3.select("body > div > div:nth-child(4) > div:nth-child(1) > div > div > div:nth-child(1)");
+    var movie_2 = d3.select("body > div > div:nth-child(4) > div:nth-child(2) > div > div > div:nth-child(1)");
+    var movie_3 = d3.select("body > div > div:nth-child(4) > div:nth-child(3) > div > div > div:nth-child(1)");
+
+    var movie_10 = d3.select("body > div > div:nth-child(4) > div:nth-child(1) > div > div > div:nth-child(2)");
+    var movie_20 = d3.select("body > div > div:nth-child(4) > div:nth-child(2) > div > div > div:nth-child(2)");
+    var movie_30 = d3.select("body > div > div:nth-child(4) > div:nth-child(3) > div > div > div:nth-child(2)");
 
     var upc_movies = [movie_1, movie_2, movie_3];
     let counter = 0;
