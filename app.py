@@ -96,7 +96,7 @@ import sqlite3
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import linear_kernel
 
-cnx = sqlite3.connect('db/newfinaldata.sqlite')
+cnx = sqlite3.connect('db/newfinaldata.sqlite', check_same_thread=False)
 df_movie = pd.read_sql_query("SELECT * FROM movie_data", cnx)
 df_img = pd.read_sql_query("SELECT * FROM images", cnx)
 df = pd.merge(df_movie, df_img, how="inner", on='name')
