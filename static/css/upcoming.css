@@ -3,8 +3,6 @@ body {
     background-position: fixed;
     background-attachment: fixed;
     background-size: cover;
-    height: 0;
-    padding-bottom: 56.58%;
 }
 
 .navbar {
@@ -37,6 +35,17 @@ body {
     padding: 0px;
   } */
   
+  #upcoming {
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 3px;
+    margin-bottom: 2px;
+    padding: 2px;
+    background-color:white;
+    opacity: 0.80;
+    font-size: 25px;
+  }
+
   .btn-default:hover {
     border-color:black;
   }
@@ -78,9 +87,12 @@ body {
   }
   
   div.movie_recommend_header {
-    margin-left: 5%;
+    /* margin-left: 5%; */
+    margin-left: 0px;
+    margin-bottom: 5px;
     padding: auto;
     color: white;
+    height: 81px;
   }
   
   h1.movie_recommend_title {
@@ -111,4 +123,8 @@ body {
   body .no-padding {
     padding-left: 0px;
     padding-right: 0px;
+  }
+
+  .col-4 {
+    margin-bottom: 10px;
   }

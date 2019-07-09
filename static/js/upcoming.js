@@ -77,8 +77,20 @@ function movieRecommender(movie) {
                     .enter()
                     .append('img')
                     .attr('src', response[0].Poster_Image);
-
+            
                 counter++;
+            
+                // movie_1.append('div').attr('class', 'title').text('Title: ').append('p').text(response[0].Title)
+                // movie_1.append('div').attr('class', 'genre').text('Genre: ').append('p').text(response[0].Genre)
+                // movie_1.append('div').attr('class', 'release_date').text('Release Date: ').append('p').text((response[0].Release_Date))
+                // movie_2.append('div').attr('class', 'title').text('Title: ').append('p').text(response[0].Title)
+                // movie_2.append('div').attr('class', 'genre').text('Genre: ').append('p').text(response[0].Genre)
+                // movie_2.append('div').attr('class', 'release_date').text('Release Date: ').append('p').text((response[0].Release_Date))
+                // movie_3.append('div').attr('class', 'title').text('Title: ').append('p').text(response[0].Title)
+                // movie_3.append('div').attr('class', 'genre').text('Genre: ').append('p').text(response[0].Genre)
+                // movie_3.append('div').attr('class', 'release_date').text('Release Date: ').append('p').text((response[0].Release_Date))
+                // movie_data.append('div').attr('class', 'genre').text('Genre: ').append('p').text(response[0].Genre)
+                // movie_data.append('div').attr('class', 'total_votes').text('Total Votes: ').append('p').text(parseInt(response[0].Total_Votes). toLocaleString())    
             });
         }
     });
