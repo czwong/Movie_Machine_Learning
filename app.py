@@ -7,7 +7,6 @@ import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine
-from sqlalchemy import or_
 
 from flask import Flask, jsonify, render_template
 from flask_sqlalchemy import SQLAlchemy
@@ -59,7 +58,7 @@ def gross_predictions():
 def movies():
     movies = db.session.query(Movies.name).filter(Movies.name == Images.name).order_by(Movies.name.asc()).distinct()
 
-    # Return a list of the column names (team names)
+    # Return a list of the column names (movies)
     return jsonify(list(movies))
 
 
@@ -169,10 +168,7 @@ def alldata():
 #=================================
 #Upcoming Movies
 #=================================
-
-
 def recommend_upcoming(movie_name, genre):
-    cnx = sqlite3.connect('db/newfinaldata.sqlite')
     df_upcoming = pd.read_sql_query("SELECT * FROM upcoming", cnx)
     
     # drop unnecessary column
