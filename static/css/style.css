@@ -1,8 +1,3 @@
-/* body {
-  margin: 0px;
-  padding: 0px;
-} */
-
 .navbar {
   color: white;
 }
@@ -72,7 +67,6 @@ div.movie_recommend_header {
   padding: auto;
   color: white;
   font-size: 150%;
-  /* font-weight: bold; */
   -webkit-text-stroke: 2px;
   -webkit-text-stroke-color: black;
 }
