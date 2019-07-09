@@ -69,6 +69,9 @@ function movieRecommender(movie) {
         movie_1.html("");
         movie_2.html("");
         movie_3.html("");
+        movie_10.html("");
+        movie_20.html("");
+        movie_30.html("");
 
         movieList.forEach(searchMovie);
 
@@ -83,18 +86,25 @@ function movieRecommender(movie) {
                     .attr('src', response[0].Poster_Image);
             
                 counter++;
-            
-                // movie_1.append('div').attr('class', 'title').text('Title: ').append('p').text(response[0].Title)
-                // movie_1.append('div').attr('class', 'genre').text('Genre: ').append('p').text(response[0].Genre)
-                // movie_1.append('div').attr('class', 'release_date').text('Release Date: ').append('p').text((response[0].Release_Date))
-                // movie_2.append('div').attr('class', 'title').text('Title: ').append('p').text(response[0].Title)
-                // movie_2.append('div').attr('class', 'genre').text('Genre: ').append('p').text(response[0].Genre)
-                // movie_2.append('div').attr('class', 'release_date').text('Release Date: ').append('p').text((response[0].Release_Date))
-                // movie_3.append('div').attr('class', 'title').text('Title: ').append('p').text(response[0].Title)
-                // movie_3.append('div').attr('class', 'genre').text('Genre: ').append('p').text(response[0].Genre)
-                // movie_3.append('div').attr('class', 'release_date').text('Release Date: ').append('p').text((response[0].Release_Date))
-                // movie_data.append('div').attr('class', 'genre').text('Genre: ').append('p').text(response[0].Genre)
-                // movie_data.append('div').attr('class', 'total_votes').text('Total Votes: ').append('p').text(parseInt(response[0].Total_Votes). toLocaleString())    
+
+                if (counter == 1) {
+                    movie_10.append('div').attr('class', 'title_rec').text('Title: ').append('p').text(response[0].Title)
+                    movie_10.append('div').attr('class', 'genre_rec').text('Genre: ').append('p').text(response[0].Genre)
+                    movie_10.append('div').attr('class', 'release_date').append('p').text((response[0].Release_Date))
+                }
+
+                if (counter == 2) {
+                    movie_20.append('div').attr('class', 'title_rec').text('Title: ').append('p').text(response[0].Title)
+                    movie_20.append('div').attr('class', 'genre_rec').text('Genre: ').append('p').text(response[0].Genre)
+                    movie_20.append('div').attr('class', 'release_date').append('p').text((response[0].Release_Date))
+                }
+
+                if (counter == 3) {
+                    movie_30.append('div').attr('class', 'title_rec').text('Title: ').append('p').text(response[0].Title)
+                    movie_30.append('div').attr('class', 'genre_rec').text('Genre: ').append('p').text(response[0].Genre)
+                    movie_30.append('div').attr('class', 'release_date').append('p').text((response[0].Release_Date))
+                }
+               
             });
         }
     });

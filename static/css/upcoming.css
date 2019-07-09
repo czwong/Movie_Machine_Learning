@@ -86,8 +86,17 @@ div.movie_recommend_header {
   height: 81px;
 }
 
+.col-4 {
+  background-color: black;
+}
+
 h1.movie_recommend_title {
   text-align: left;
+}
+
+.title_rec, .genre_rec, .release_date {
+  color: white;
+  font-weight: bold;
 }
 
 .rating, .duration, .gross_earning, .genre, .total_votes {

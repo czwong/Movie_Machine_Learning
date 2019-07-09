@@ -19,15 +19,15 @@ In addition to the movie recommender, we used a Random Forest Regressor model to
 * `randomForestRegressor.py`: Random Forest Regressor model; exports gross predictions and actual gross directly to the SQLite file 
 
 ### Programs/Tools Used:
-Python Flask
-SQLite
-Sklearn
-Javascript
-HTML
-CSS
-Plotly.js
-D3.js
-SQLAlchemy
+* Python Flask
+* SQLite
+* Sklearn
+* Javascript
+* HTML
+* CSS
+* Plotly.js
+* D3.js
+* SQLAlchemy
 
 ### Webpages:
 * `/`: Main movie recommender that suggests similar movies
