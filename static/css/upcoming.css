@@ -68,6 +68,12 @@ body {
     margin-bottom: 20px;
     opacity: 1;
   }
+
+  #movie_data_body_2 {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    opacity: 1;
+  }
   
   h1.nothing_found {
     margin: auto;

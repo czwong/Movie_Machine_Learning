@@ -172,6 +172,7 @@ def alldata():
 
 
 def recommend_upcoming(movie_name, genre):
+    cnx = sqlite3.connect('db/newfinaldata.sqlite')
     df_upcoming = pd.read_sql_query("SELECT * FROM upcoming", cnx)
     
     # drop unnecessary column
@@ -206,8 +207,8 @@ def recommend_upcoming(movie_name, genre):
     titles = df_upcoming['name']
     indices = pd.Series(df_upcoming.index, index=df_upcoming['name'])
 
-    newtitle = movie_name
-    idx = indices[newtitle]
+    # newtitle = movie_name
+    idx = indices[movie_name]
     sim_scores = list(enumerate(cosine_sim[idx]))
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
     sim_scores = sim_scores[0:4]

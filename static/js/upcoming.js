@@ -52,152 +52,107 @@ function moviedata(movie) {
 }
 
 function movieRecommender(movie) {
-    var movieList_url = "/upcoming_movie_recommendation/" + `${movie}`
+    var movieList_url = "/upcoming_movie_recommendation/" + `${movie}`;
 
-    // var carousel_1 = d3.select("#demo > div > div:nth-child(1)");
-    // var carousel_2 = d3.select("#demo > div > div:nth-child(2)");
-    // var movie_recommend_row = d3.select("body > div > div:nth-child(3)");
+    var carousel_1 = d3.select("#demo > div > div:nth-child(1)");
+    var carousel_2 = d3.select("#demo > div > div:nth-child(2)");
+    var carousel_3 = d3.select("#demo > div > div:nth-child(3)");
 
-    // var carousel_group = [carousel_1, carousel_2];
-    // let carousel_count = 0;
+    // var upc_data_img = d3.select("#movie_data_body_2");
+    // var upc_data = d3.select("#movie_data_body_2 > div:nth-child(2)");
+    // upc_data.html("")
+    // upc_data_img.html("")
 
-    // //movie_recommend_row.classed('d-none', true)
+    //movie_recommend_row.classed('d-none', true)
 
-    // d3.json(movieList_url).then(function (movieList) {
-    //     carousel_1.html("");
-    //     carousel_2.html("");
+    var carousel_group = [carousel_1, carousel_2, carousel_3];
+    let carousel_count = 0;
 
-    //     try {
-    //         movieList.forEach(searchMovie);
+    d3.json(movieList_url).then(function (movieList) {
+        // // carousel_1.html("");
+        // upc_data.html("")
+        // upc_data_img.html("")
+        carousel_1.html("");
+        carousel_2.html("");
+        carousel_3.html("");
 
-    //         function searchMovie(movie) {
-    //             var movie_url = "/movies/" + `${movie}`;
+        try {
+            movieList.forEach(searchMovie);
 
-    //             d3.json(movie_url).then(function (response) {
-    //                 if (carousel_group[carousel_count]._groups[0][0].childElementCount < 4) {
-    //                     carousel_group[carousel_count].selectAll('div.carousel-item')
-    //                         .data(response)
-    //                         .enter()
-    //                         .append('div')
-    //                         .attr('class', 'col-xs-2 col-sm-2 col-md-2')
-    //                         .append('a')
-    //                         .attr('href', '#').attr('class', 'img-zoom-hover').property("value", movie)
-    //                         .on("mouseover", function () {
-    //                             var Nodeselection = d3.select(this);
-    //                             return Nodeselection._groups[0][0].value;
-    //                         })
-    //                         .on("click", function () {
-    //                             optionChanged(this.value);
-    //                             d3.select("#dataSet").property('value', this.value);
-    //                         })
-    //                         .append('img')
-    //                         .attr('src', response[0].Poster_Image).attr('title', this.text);
-    //                 }
+            function searchMovie(movie) {
+                var movie_url = "/upc_movie/" + `${movie}`;
 
-    //                 else {
-    //                     carousel_count++;
-    //                     carousel_group[carousel_count].selectAll('div.carousel-item')
-    //                         .data(response)
-    //                         .enter()
-    //                         .append('div')
-    //                         .attr('class', 'col-xs-2 col-sm-2 col-md-2')
-    //                         .on("click", function () {
-    //                             optionChanged(this.value);
-    //                             d3.select("#dataSet").property('value', this.value);
-    //                         })
-    //                         .append('a')
-    //                         .attr('href', '#').attr('class', 'img-zoom-hover').property("value", movie)
-    //                         .append('img')
-    //                         .attr('src', response[0].Poster_Image);
-    //                 }
-    //             });
-    //         }
-    //     }
+                d3.json(movie_url).then(function (response) {
 
-    //     catch (err) {
-    //         var message = d3.select("body > div > div:nth-child(1) > div.col-lg-8 > div > div:nth-child(1) > div");
-    //         message.html("");
-    //         message.append("h1")
-    //             .attr("class", "nothing_found")
-    //             .text("No results found for " + movie);
+                    carousel_group[carousel_count].selectAll('img')
+                        .data(response)
+                        .enter()
+                        .append('div')
+                        .attr('class', 'col-6')
+                        .append('img')
+                        .attr('src', response[0].Poster_Image)
+                        .attr('height', 'auto')
+                        .attr('width', 'auto');
+                        // .append('div').attr('class', 'genre').text('Title: ').append('p').text(response[0].Title)
+                        // .append('div').attr('class', 'genre').append('p').text(response[0].Release_Date)
+                        // .append('div').attr('class', 'genre').text('Genre: ').append('p').text(response[0].Genre);
 
-    //         movie_recommend_row.classed('d-none', true);
-    //     }
-    // });
-    // var movieList_url = "/movie_recommendation/" + `${movie}`
+                    carousel_group[carousel_count].append('div').attr('class', 'genre').text('Title: ').append('p').text(response[0].Title);
+                    carousel_group[carousel_count].append('div').attr('class', 'genre').append('p').text(response[0].Release_Date);
+                    carousel_group[carousel_count].append('div').attr('class', 'genre').text('Genre: ').append('p').text(response[0].Genre);
 
-    // var carousel_1 = d3.select("#demo > div > div:nth-child(1)");
-    // var carousel_2 = d3.select("#demo > div > div:nth-child(2)");
-    // var carousel_3 = d3.select("#demo > div > div:nth-child(3)");
-    // var movie_recommend_row = d3.select("body > div > div:nth-child(3)");
+                    carousel_count ++;
 
-    // var carousel_group = [carousel_1, carousel_2, carousel_3];
-    // let carousel_count = 0;
+                    // if (carousel_group[carousel_count]._groups[0][0].childElementCount < 4) {
+                    //     carousel_group[carousel_count].selectAll('div.carousel-item')
+                    //         .data(response)
+                    //         .enter()
+                    //         .append('div')
+                    //         .attr('class', 'col-xs-2 col-sm-2 col-md-2')
+                    //         .append('a')
+                    //         .attr('href', '#').attr('class', 'img-zoom-hover').property("value", movie)
+                    //         .on("mouseover", function () {
+                    //             var Nodeselection = d3.select(this);
+                    //             return Nodeselection._groups[0][0].value;
+                    //         })
+                    //         .on("click", function () {
+                    //             optionChanged(this.value);
+                    //             d3.select("#dataSet").property('value', this.value);
+                    //         })
+                    //         .append('img')
+                    //         .attr('src', response[0].Poster_Image).attr('title', this.text);
+                    // }
 
-    // //movie_recommend_row.classed('d-none', true)
+                    // else {
+                    //     carousel_count++;
+                    //     carousel_group[carousel_count].selectAll('div.carousel-item')
+                    //         .data(response)
+                    //         .enter()
+                    //         .append('div')
+                    //         .attr('class', 'col-xs-2 col-sm-2 col-md-2')
+                    //         .on("click", function () {
+                    //             optionChanged(this.value);
+                    //             d3.select("#dataSet").property('value', this.value);
+                    //         })
+                    //         .append('a')
+                    //         .attr('href', '#').attr('class', 'img-zoom-hover').property("value", movie)
+                    //         .append('img')
+                    //         .attr('src', response[0].Poster_Image);
+                    // }
+                });
+            }
+        }
 
-    // d3.json(movieList_url).then(function (movieList) {
-    //     carousel_1.html("");
-    //     carousel_2.html("");
-    //     carousel_3.html("");
+        catch (err) {
+            var message = d3.select("body > div > div:nth-child(1) > div.col-lg-8 > div > div:nth-child(1) > div");
+            message.html("");
+            message.append("h1")
+                .attr("class", "nothing_found")
+                .text("No results found for " + movie);
 
-    //     try {
-    //         movieList.forEach(searchMovie);
-
-    //         function searchMovie(movie) {
-    //             var movie_url = "/movies/" + `${movie}`;
-
-    //             d3.json(movie_url).then(function (response) {
-    //                 if (carousel_group[carousel_count]._groups[0][0].childElementCount < 6) {
-    //                     carousel_group[carousel_count].selectAll('div.carousel-item')
-    //                         .data(response)
-    //                         .enter()
-    //                         .append('div')
-    //                         .attr('class', 'col-xs-2 col-sm-2 col-md-2')
-    //                         .append('a')
-    //                         .attr('href', '#').attr('class', 'img-zoom-hover').property("value", movie)
-    //                         .on("mouseover", function () {
-    //                             var Nodeselection = d3.select(this);
-    //                             return Nodeselection._groups[0][0].value;
-    //                         })
-    //                         .on("click", function () {
-    //                             optionChanged(this.value);
-    //                             d3.select("#dataSet").property('value', this.value);
-    //                         })
-    //                         .append('img')
-    //                         .attr('src', response[0].Poster_Image).attr('title', this.text);
-    //                 }
-
-    //                 else {
-    //                     carousel_count++;
-    //                     carousel_group[carousel_count].selectAll('div.carousel-item')
-    //                         .data(response)
-    //                         .enter()
-    //                         .append('div')
-    //                         .attr('class', 'col-xs-2 col-sm-2 col-md-2')
-    //                         .on("click", function () {
-    //                             optionChanged(this.value);
-    //                             d3.select("#dataSet").property('value', this.value);
-    //                         })
-    //                         .append('a')
-    //                         .attr('href', '#').attr('class', 'img-zoom-hover').property("value", movie)
-    //                         .append('img')
-    //                         .attr('src', response[0].Poster_Image);
-    //                 }
-    //             });
-    //         }
-    //     }
-
-    //     catch (err) {
-    //         var message = d3.select("body > div > div:nth-child(1) > div.col-lg-8 > div > div:nth-child(1) > div");
-    //         message.html("");
-    //         message.append("h1")
-    //             .attr("class", "nothing_found")
-    //             .text("No results found for " + movie);
-
-    //         movie_recommend_row.classed('d-none', true);
-    //     }
-    // });
+            movie_recommend_row.classed('d-none', true);
+        }
+    });
 }
 
 
