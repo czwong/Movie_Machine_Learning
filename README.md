@@ -6,6 +6,8 @@ Our goal for the recommender is to facilitate the movie selection process for us
 
 In addition to the movie recommender, we used a Random Forest Regressor model to predict the gross of movies based on a few movie variables such as IMDB rating, movie budget, and content rating. The most important feature in predicting the gross was the number of users that voted.
 
+<!-- We created the movie recommender to simplify the selection process -->
+
 ### Files:
 * `Resources/movie_metadata.csv`: IMDB movie dataset with 28 columns and 5000 rows. 
 * `db/newfinaldata.sqlite`: SQLite database with four tables:
@@ -20,7 +22,7 @@ In addition to the movie recommender, we used a Random Forest Regressor model to
 
 ### Programs/Tools Used:
 Python Flask
-SQLite
+MySQL/SQLite
 Sklearn
 Javascript
 HTML
@@ -31,7 +33,7 @@ SQLAlchemy
 
 ### Webpages:
 * `/`: Main movie recommender that suggests similar movies
-* `/upcoming_movies`: Second movie recommender that suggests upcoming movies based on selection of past movies
+* `/upcoming_movies`: Movie recommender that suggests upcoming movies based on selection of past movies
 * `/data_exploration`: Various graphs of the distribution of variables used in the Random Forest Regressor model and possible correlations
 * `/gross_predictions`: Quantification of the Random Forest Regressor model
 
