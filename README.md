@@ -1,6 +1,6 @@
 # Content-Based Movie Recommender
 
-Our project uses a content-based movie recommender algorithm that recommends movies to users based on the movie’s genre similarity. It uses the Vector Space Model, which stores movies as a vector of their genres; the cosine between the angles of vectors is calculated to determine the similarity between genres of the movies. 
+Our project uses a content-based movie recommender algorithm that recommends movies to users based on the movie’s genre similarity. It uses the Vector Space Model,which stores movies as a vector of their genres; the cosine between the angles of vectors is calculated to determine the similarity between genres of the movies. 
 
 In addition to the movie recommender, we used a Random Forest Regressor model to predict the gross of movies based on a few movie variables such as IMDB rating, movie budget, and content rating. The most important feature in predicting the gross was the number of users that voted.
 
@@ -17,8 +17,7 @@ In addition to the movie recommender, we used a Random Forest Regressor model to
     * `extract2019.py`, `transform2019.py`, `load2019.py`: Cleans the csv fie and exports it to a MySQL database
 * `extractMovie.py`, `trasnformMovie.py`, `loadMovie.py`: Cleans the movie_metadata.csv and exports it to a MySQL database
 * `extractImages.py`, `transformImages.py`, `loadImages.py`: Web scrapes the image of each movie in the movie_data.csv and exports it to a MySQL database
-* `randomForestRegressor.py`: Random Forest Regressor model; outputs gross predictions and actual gross directly to the SQLite file
-* 
+* `randomForestRegressor.py`: Random Forest Regressor model; outputs gross predictions and actual gross directly to the SQLite file 
 
 ### Programs/Tools Used:
 Python Flask
@@ -39,6 +38,7 @@ SQLAlchemy
 
 ### How to run the app locally:
 * NOTE: SQLite file is pre-loaded with all the data
+* We also used a SQlite converter to 
 
 
 
