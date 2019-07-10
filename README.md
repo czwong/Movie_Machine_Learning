@@ -40,3 +40,6 @@ In addition to the movie recommender, we used a Random Forest Regressor model to
 * 1) Open your terminal in the downloaded repository.
 * 2) Run the command `python app.py`
 * 3) Paste this link into a browser: http://127.0.0.1:5000/
+
+### Link to Heroku App:
+https://fake-imdb.herokuapp.com
