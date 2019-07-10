@@ -70,12 +70,12 @@ d3.json("/gross_data").then(function(response) {
       .attr("x", 0 - (chartHeight / 2))
       .attr("dy", "1em")
       .attr("class", "axisText")
-      .text("Actual Gross");
+      .text("Predicted Gross");
 
     chartGroup.append("text")
       .attr("transform", `translate(${chartWidth / 2}, ${chartHeight + chartMargin.top - 4})`)
       .attr("class", "axisText")
-      .text("Predicted Gross");
+      .text("Actual Gross");
 
     var toolTip = d3.tip()
     .attr("class", "tooltip")
